@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trợ lý AI của cô – Tiểu học (Chuẩn Thông tư 27)</title>
+  <style>
+    :root {
+      --primary-blue: #1e6091;
+      --primary-blue-hover: #184e77;
+      --soft-blue-bg: #e8f4f8;
+      --primary-green: #2d6a4f;
+      --primary-green-hover: #1b4332;
+      --soft-green-bg: #eaf4ec;
+      --accent-warm: #d97706;
+      --warning-bg: #fef3c7;
+      --warning-border: #f59e0b;
+      --warning-text: #92400e;
+      --danger-color: #b91c1c;
+      --text-dark: #1f2937;
+      --text-muted: #4b5563;
+      --border-color: #cbd5e1;
+      --bg-canvas: #f4f8fa;
+      --card-bg: #ffffff;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background-color: var(--bg-canvas);
+      padding: 16px;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 4px 24px rgba(30, 96, 145, 0.08);
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e6091 0%, #2d6a4f 100%);
+      color: #ffffff;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    header p {
+      font-size: 1.02rem;
+      opacity: 0.95;
+      margin-top: 6px;
+    }
+
+    .warning-banner {
+      background-color: var(--warning-bg);
+      border-left: 6px solid var(--warning-border);
+      color: var(--warning-text);
+      padding: 14px 18px;
+      margin: 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.98rem;
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-weight: 500;
+    }
+
+    .warning-icon {
+      font-size: 1.3rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .tab-navigation {
+      display: flex;
+      background-color: #f1f5f9;
+      border-bottom: 2px solid #cbd5e1;
+      padding: 0 16px;
+      overflow-x: auto;
+      gap: 6px;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 14px 20px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+
+    .tab-btn:hover {
+      color: var(--primary-blue);
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .tab-btn.active {
+      color: var(--primary-blue);
+      border-bottom-color: var(--primary-blue);
+      background-color: var(--card-bg);
+    }
+
+    .tab-content {
+      display: none;
+      padding: 24px 20px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 680px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #334155;
+      font-size: 1rem;
+    }
+
+    label .req {
+      color: var(--danger-color);
+      margin-left: 2px;
+    }
+
+    .help-hint {
+      font-size: 0.88rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      font-family: inherit;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      background-color: #fff;
+      color: var(--text-dark);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(30, 96, 145, 0.15);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      padding: 12px 22px;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+      min-height: 48px;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background-color: var(--primary-blue);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(30, 96, 145, 0.25);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-blue-hover);
+    }
+
+    .btn-green {
+      background-color: var(--primary-green);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(45, 106, 79, 0.25);
+    }
+
+    .btn-green:hover {
+      background-color: var(--primary-green-hover);
+    }
+
+    .btn-secondary {
+      background-color: #f1f5f9;
+      color: #334155;
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .btn-secondary:hover {
+      background-color: #e2e8f0;
+    }
+
+    .btn-danger-outline {
+      background: transparent;
+      color: var(--danger-color);
+      border: 1px solid #fca5a5;
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      min-height: 38px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    .btn-danger-outline:hover {
+      background: #fef2f2;
+      border-color: var(--danger-color);
+    }
+
+    .result-box-wrapper {
+      margin-top: 26px;
+      background: #ffffff;
+      border: 2px solid #0284c7;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.08);
+    }
+
+    .result-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid #e2e8f0;
+    }
+
+    .result-box-title {
+      font-weight: 700;
+      color: var(--primary-blue);
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .printable-sheet {
+      background: #ffffff;
+      border: 1px dashed #94a3b8;
+      border-radius: var(--radius-sm);
+      padding: 24px;
+      font-size: 1.02rem;
+      line-height: 1.65;
+      color: #1e293b;
+    }
+
+    .sheet-head {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid #334155;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      font-size: 0.98rem;
+    }
+
+    .sheet-title-block {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sheet-main-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .sheet-subtitle {
+      font-style: italic;
+      color: #475569;
+      margin-top: 4px;
+    }
+
+    .level-section {
+      margin-bottom: 22px;
+      background: #f8fafc;
+      border-left: 4px solid var(--primary-blue);
+      padding: 12px 16px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    .level-section.m2 {
+      border-left-color: var(--primary-green);
+    }
+
+    .level-section.m3 {
+      border-left-color: var(--accent-warm);
+    }
+
+    .level-title {
+      font-weight: 700;
+      font-size: 1.08rem;
+      margin-bottom: 10px;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .question-item {
+      margin-bottom: 12px;
+      padding-left: 6px;
+    }
+
+    /* Các đáp án trắc nghiệm A, B, C, D xuống dòng riêng biệt */
+    .mcq-question {
+      margin-bottom: 16px;
+      padding-left: 6px;
+    }
+
+    .mcq-options {
+      margin-top: 6px;
+      margin-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .mcq-option-line {
+      font-size: 1rem;
+      color: #334155;
+    }
+
+    .sheet-answers-box {
+      margin-top: 24px;
+      padding: 16px;
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: var(--radius-sm);
+    }
+
+    .sheet-mistakes-box {
+      margin-top: 14px;
+      padding: 16px;
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+      border-radius: var(--radius-sm);
+    }
+
+    .student-table-container {
+      overflow-x: auto;
+      margin-bottom: 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+    }
+
+    .student-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 580px;
+      text-align: left;
+    }
+
+    .student-table th {
+      background-color: #f1f5f9;
+      color: #334155;
+      font-weight: 700;
+      padding: 10px 12px;
+      border-bottom: 1.5px solid #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    .student-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    .student-table tr:hover {
+      background-color: #fafafa;
+    }
+
+    .error-tag {
+      color: var(--danger-color);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: none;
+      margin-top: 4px;
+    }
+
+    .error-tag.active {
+      display: block;
+    }
+
+    .feedback-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .feedback-card {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .feedback-card:hover {
+      border-color: var(--primary-blue);
+      box-shadow: 0 3px 12px rgba(30, 96, 145, 0.08);
+    }
+
+    .feedback-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .student-badge {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--primary-blue);
+      background: var(--soft-blue-bg);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .level-badge {
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    .level-good { background: #dcfce7; color: #166534; }
+    .level-pass { background: #e0f2fe; color: #075985; }
+    .level-support { background: #fee2e2; color: #991b1b; }
+
+    .feedback-text-area {
+      width: 100%;
+      min-height: 90px;
+      padding: 10px;
+      font-size: 1rem;
+      line-height: 1.6;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 6px;
+      background: #fff;
+      color: #1e293b;
+    }
+
+    .feedback-card-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background-color: #1e293b;
+      color: #fff;
+      padding: 14px 22px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+      .container {
+        border: none;
+        box-shadow: none;
+        max-width: 100%;
+      }
+      header, .warning-banner, .tab-navigation, form, .result-actions, .toast {
+        display: none !important;
+      }
+      .result-box-wrapper {
+        border: none !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+      }
+      .printable-sheet {
+        border: none !important;
+        padding: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1><span>📚</span> Trợ lý AI của cô – Tiểu học</h1>
+      <p>Tạo Phiếu bài tập 3 mức (Chuẩn Thông tư 27 & Bộ sách Kết nối tri thức) & Lời nhận xét trực tiếp</p>
+    </header>
+
+    <!-- Dòng cảnh báo an toàn bảo mật thông tin học sinh -->
+    <div class="warning-banner" role="alert">
+      <span class="warning-icon">⚠️</span>
+      <div>
+        <strong>LƯU Ý QUAN TRỌNG:</strong> Không nhập tên thật, địa chỉ hay hoàn cảnh gia đình của học sinh. Dùng mã số (ví dụ: HS01). Mọi nội dung được tạo tự động để cô làm bản nháp tiện dụng, cô hãy đọc soát và chỉnh sửa trước khi dùng thực tế nhé.
+      </div>
+    </div>
+
+    <!-- Hệ thống chuyển Tab -->
+    <div class="tab-navigation" role="tablist">
+      <button class="tab-btn active" id="btn-tab-1" onclick="switchTab(1)" role="tab">📑 Tạo Phiếu bài tập 3 mức</button>
+      <button class="tab-btn" id="btn-tab-2" onclick="switchTab(2)" role="tab">💬 Tạo Lời nhận xét học sinh</button>
+    </div>
+
+    <div id="tab-1" class="tab-content active" role="tabpanel">
+      <form id="form-tab-1" onsubmit="event.preventDefault(); renderWorksheetDirectly();">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ws-grade">Khối lớp <span class="req">*</span></label>
+            <select id="ws-grade">
+              <option value="1">Lớp 1</option>
+              <option value="2">Lớp 2</option>
+              <option value="3" selected>Lớp 3</option>
+              <option value="4">Lớp 4</option>
+              <option value="5">Lớp 5</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="ws-subject">Môn học <span class="req">*</span></label>
+            <select id="ws-subject">
+              <option value="Toán" selected>Toán</option>
+              <option value="Tiếng Việt">Tiếng Việt</option>
+              <option value="Tự nhiên và Xã hội">Tự nhiên và Xã hội</option>
+              <option value="Khoa học">Khoa học</option>
+              <option value="Lịch sử và Địa lí">Lịch sử và Địa lí</option>
+              <option value="Đạo đức">Đạo đức</option>
+              <option value="Tin học">Tin học</option>
+              <option value="Công nghệ">Công nghệ</option>
+              <option value="Tiếng Anh">Tiếng Anh</option>
+              <option value="Hoạt động trải nghiệm">Hoạt động trải nghiệm</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px;">
+            <label for="ws-lesson" style="margin-bottom: 0;">Tên bài học <span class="req">*</span></label>
+            <span style="font-size: 0.88rem; color: var(--primary-green); font-weight: 600;">📖 Bộ sách: Kết nối tri thức với cuộc sống</span>
+          </div>
+          <input type="text" id="ws-lesson" value="Phép chia có dư" placeholder="ví dụ: Phép chia có dư, Bài 12: Giữ vệ sinh trường học..." required style="margin-top: 6px;">
+        </div>
+
+        <div class="form-group">
+          <label for="ws-goals">Yêu cầu cần đạt của bài <span class="req">*</span></label>
+          <textarea id="ws-goals" rows="3" required>Học sinh nhận biết được phép chia có dư, thực hiện được phép tính chia có dư trong phạm vi đã học, vận dụng giải bài toán thực tế đơn giản.</textarea>
+        </div>
+
+        <div class="form-row" style="grid-template-columns: repeat(3, 1fr);">
+          <div class="form-group">
+            <label for="ws-n1">Mức 1 (Trắc nghiệm)</label>
+            <input type="number" id="ws-n1" value="4" min="1" max="15" required>
+          </div>
+          <div class="form-group">
+            <label for="ws-n2">Mức 2 (Kết nối, tương tự)</label>
+            <input type="number" id="ws-n2" value="4" min="1" max="15" required>
+          </div>
+          <div class="form-group">
+            <label for="ws-n3">Mức 3 (Vận dụng thực tế)</label>
+            <input type="number" id="ws-n3" value="3" min="1" max="15" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ws-notes">Ghi chú thêm (tùy chọn)</label>
+          <input type="text" id="ws-notes" placeholder="ví dụ: Dùng ngữ liệu gần gũi học sinh tiểu học, số liệu bài toán thực tế">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          ⚡ Tạo trực tiếp Phiếu bài tập 3 mức (Thông tư 27)
+        </button>
+      </form>
+
+      <!-- Khung hiển thị Phiếu bài tập hoàn chỉnh -->
+      <div id="result-box-1" class="result-box-wrapper" style="display: none;">
+        <div class="result-box-header">
+          <span class="result-box-title">📑 Phiếu học tập đã tạo thành công</span>
+          <div class="result-actions">
+            <button class="btn btn-primary" onclick="downloadWorksheetDoc()">📥 Tải phiếu bài tập (.doc)</button>
+            <button class="btn btn-green" onclick="copyWorksheetText()">📋 Sao chép nội dung</button>
+            <button class="btn btn-secondary" onclick="window.print()">🖨️ In phiếu bài tập</button>
+          </div>
+        </div>
+
+        <div id="worksheet-preview" class="printable-sheet">
+          <!-- Nội dung phiếu được tạo động -->
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-2" class="tab-content" role="tabpanel">
+      <form id="form-tab-2" onsubmit="event.preventDefault(); renderFeedbacksDirectly();">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fb-grade">Khối lớp <span class="req">*</span></label>
+            <select id="fb-grade">
+              <option value="1">Lớp 1</option>
+              <option value="2">Lớp 2</option>
+              <option value="3" selected>Lớp 3</option>
+              <option value="4">Lớp 4</option>
+              <option value="5">Lớp 5</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fb-subject">Môn học / Mảng nhận xét <span class="req">*</span></label>
+            <select id="fb-subject">
+              <option value="Toán" selected>Môn Toán</option>
+              <option value="Tiếng Việt">Môn Tiếng Việt</option>
+              <option value="Tự nhiên và Xã hội / Khoa học">Tự nhiên và Xã hội / Khoa học</option>
+              <option value="Lịch sử và Địa lí">Lịch sử và Địa lí</option>
+              <option value="Tiếng Anh">Tiếng Anh</option>
+              <option value="Tin học">Tin học</option>
+              <option value="Công nghệ">Công nghệ</option>
+              <option value="Đạo đức">Đạo đức</option>
+              <option value="Hoạt động trải nghiệm">Hoạt động trải nghiệm</option>
+              <option value="Năng lực cốt lõi">Năng lực (Tự chủ, Giao tiếp, Giải quyết vấn đề)</option>
+              <option value="Phẩm chất">Phẩm chất (Chăm chỉ, Trung thực, Trách nhiệm, Nhân ái)</option>
+            </select>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="fb-tone">Giọng văn nhận xét <span class="req">*</span></label>
+            <select id="fb-tone">
+              <option value="Ấm áp" selected>Ấm áp (khích lệ, gần gũi, khơi dậy niềm tin và hứng thú học tập)</option>
+              <option value="Ngắn gọn">Ngắn gọn (súc tích, rõ ý, thuận tiện ghi học bạ / sổ theo dõi)</option>
+              <option value="Trang trọng">Trang trọng (chuẩn mực ngôn ngữ sư phạm, báo cáo chuyên môn)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <label style="margin-bottom: 0;">Danh sách học sinh & Mức đạt (Thông tư 27): <span class="req">*</span></label>
+            <button type="button" class="btn btn-secondary" style="min-height: 36px; padding: 6px 14px; font-size: 0.92rem;" onclick="addStudentRow()">➕ Thêm học sinh</button>
+          </div>
+
+          <div class="student-table-container">
+            <table class="student-table">
+              <thead>
+                <tr>
+                  <th style="width: 180px;">Mã số (HS01, HS02...)</th>
+                  <th>Mức đạt được của học sinh</th>
+                  <th style="width: 90px; text-align: center;">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="student-list-body">
+                <!-- Dòng học sinh mẫu ban đầu -->
+              </tbody>
+            </table>
+          </div>
+          <div class="help-hint">💡 Lời nhận xét sẽ tự động điều chỉnh theo môn học đã chọn và mức đạt của học sinh, đảm bảo mỗi em có lời nhận xét riêng biệt, không bị trùng lặp.</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          ⚡ Tạo trực tiếp Lời nhận xét theo Thông tư 27 (Tự động phân hoá, không lặp lại)
+        </button>
+      </form>
+
+      <!-- Khung hiển thị danh sách Lời nhận xét -->
+      <div id="result-box-2" class="result-box-wrapper" style="display: none;">
+        <div class="result-box-header">
+          <span class="result-box-title">💬 Lời nhận xét từng học sinh (Tự động theo môn học)</span>
+          <div class="result-actions">
+            <button class="btn btn-primary" onclick="downloadFeedbacksExcel()">📥 Tải xuống file Excel (.xls)</button>
+            <button class="btn btn-green" onclick="copyAllFeedbacks()">📋 Sao chép tất cả lời nhận xét</button>
+          </div>
+        </div>
+
+        <div id="feedback-list-container" class="feedback-cards-grid">
+          <!-- Thẻ nhận xét từng em hiển thị tại đây -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thông báo Toast nổi -->
+  <div id="toast" class="toast">Đã thực hiện xong!</div>
+
+  <script>
+    /* Hiển thị thông báo Toast */
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.innerText = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    /* Chuyển đổi giữa 2 tab */
+    function switchTab(tabIndex) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+      const activeContent = document.getElementById('tab-' + tabIndex);
+      const activeBtn = document.getElementById('btn-tab-' + tabIndex);
+      if (activeContent) activeContent.classList.add('active');
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    function generateSubjectExercises(grade, subject, lesson, goals, n1, n2, n3) {
+      const cleanLesson = lesson || "Bài học trọng tâm";
+      let m1 = [];
+      let m2 = [];
+      let m3 = [];
+      let answers = [];
+      let mistakes = [];
+
+      if (subject === "Toán") {
+        m1 = [
+          {
+            q: `Thực hiện phép chia 17 : 3, ta được thương và số dư lần lượt là:`,
+            options: [
+              `A. Thương là 5, số dư là 1`,
+              `B. Thương là 5, số dư là 2`,
+              `C. Thương là 4, số dư là 5`,
+              `D. Thương là 6, số dư là 1`
+            ]
+          },
+          {
+            q: `Trong phép chia có số chia là 6, số dư lớn nhất có thể có là:`,
+            options: [
+              `A. 6`,
+              `B. 5`,
+              `C. 4`,
+              `D. 7`
+            ]
+          },
+          {
+            q: `Phép chia nào dưới đây là phép chia có số dư bằng 4?`,
+            options: [
+              `A. 20 : 5`,
+              `B. 25 : 7`,
+              `C. 29 : 5`,
+              `D. 31 : 6`
+            ]
+          },
+          {
+            q: `Cho phép tính 43 : 8. Số dư của phép tính này là:`,
+            options: [
+              `A. 1`,
+              `B. 2`,
+              `C. 3`,
+              `D. 4`
+            ]
+          },
+          {
+            q: `Khẳng định nào dưới đây là ĐÚNG về phép chia có dư?`,
+            options: [
+              `A. Số dư luôn lớn hơn số chia`,
+              `B. Số dư luôn nhỏ hơn số chia`,
+              `C. Số dư luôn bằng số chia`,
+              `D. Số dư có thể lớn hơn số bị chia`
+            ]
+          },
+          {
+            q: `Số bị chia là bao nhiêu nếu số chia là 5, thương là 6 và số dư là 2?`,
+            options: [
+              `A. 30`,
+              `B. 31`,
+              `C. 32`,
+              `D. 35`
+            ]
+          }
+        ];
+
+        m2 = [
+          `Đặt tính rồi tính: a) 38 : 4 &emsp;&emsp; b) 59 : 6 &emsp;&emsp; c) 77 : 8.`,
+          `Một lớp học có 35 học sinh. Cô giáo muốn chia đều các bạn vào các tổ, mỗi tổ có 6 học sinh. Hỏi chia được nhiều nhất bao nhiêu tổ và còn thừa mấy bạn?`,
+          `Bác Ba thu hoạch được 46 kg táo và chia đều vào các túi, mỗi túi chứa 5 kg. Hỏi bác Ba đóng được nhiều nhất bao nhiêu túi và còn thừa mấy ki-lô-gam táo?`,
+          `Tìm x biết: x : 7 = 8 (dư 5).`,
+          `Tính giá trị của biểu thức: 45 + (39 : 4 lấy phần thương).`,
+          `Điền số thích hợp vào bảng: Số bị chia: 62 | Số chia: 7 | Thương: ... | Số dư: ...`
+        ];
+
+        m3 = [
+          `Bác An có 50 quả dừa cần xếp vào các thùng để vận chuyển ra chợ, mỗi thùng chứa được tối đa 6 quả. Hỏi bác An cần ít nhất bao nhiêu chiếc thùng để xếp hết số dừa trên?`,
+          `Một đoàn khách gồm 31 người muốn đi đò sang sông. Mỗi chuyến đò chỉ chở được nhiều nhất 6 người khách (không kể người lái đò). Hỏi cần ít nhất bao nhiêu chuyến đò để chở hết số khách qua sông?`,
+          `Thử thách: Tìm một số có hai chữ số, biết rằng số đó chia cho 8 được thương là 7 và có số dư là số dư lớn nhất có thể có.`,
+          `Em hãy tự sáng tác một bài toán thực tế gắn liền với hoạt động trong gia đình hoặc trường học có sử dụng phép chia có dư, sau đó trình bày lời giải chi tiết.`
+        ];
+
+        answers = [
+          `Mức 1: Câu 1: B (5 dư 2) | Câu 2: B (5) | Câu 3: C (29:5 dư 4) | Câu 4: C (dư 3) | Câu 5: B (Số dư luôn bé hơn số chia) | Câu 6: C (32).`,
+          `Mức 2: Đặt tính: 38:4 = 9 dư 2; 59:6 = 9 dư 5; 77:8 = 9 dư 5. Bài chia tổ: 35 : 6 = 5 (dư 5) -> chia được 5 tổ và thừa 5 bạn. Tìm x: x = 8 x 7 + 5 = 61.`,
+          `Mức 3: Bài xếp dừa: 50 : 6 = 8 (dư 2 quả). Vì còn thừa 2 quả nên cần thêm 1 thùng -> Bác An cần ít nhất: 8 + 1 = 9 thùng. Bài số dư lớn nhất: số dư lớn nhất là 7 -> Số cần tìm = 7 x 8 + 7 = 63.`
+        ];
+
+        mistakes = [
+          `Học sinh ước lượng thương chưa đủ dẫn đến số dư lớn hơn hoặc bằng số chia.`,
+          `Ở bài toán thực tế mức 3 (xếp thùng/chở đò): Học sinh thường quên cộng thêm 1 đơn vị cho số hàng hóa/người còn dư.`,
+          `Nhầm thứ tự tìm số bị chia: lấy thương cộng số dư trước rồi mới nhân với số chia.`
+        ];
+      } else if (subject === "Tiếng Việt") {
+        m1 = [
+          {
+            q: `Trong bài học "${cleanLesson}", từ ngữ nào dưới đây là từ chỉ hoạt động?`,
+            options: [
+              `A. Chăm chỉ`,
+              `B. Thảo luận`,
+              `C. Xinh xắn`,
+              `D. Bàn ghế`
+            ]
+          },
+          {
+            q: `Dấu câu nào phù hợp nhất để điền vào cuối câu: "Hôm nay thời tiết đẹp quá(...)"?`,
+            options: [
+              `A. Dấu chấm (.)`,
+              `B. Dấu chấm hỏi (?)`,
+              `C. Dấu chấm than (!)`,
+              `D. Dấu phẩy (,)`
+            ]
+          },
+          {
+            q: `Cặp từ nào dưới đây là cặp từ đồng nghĩa?`,
+            options: [
+              `A. Chăm chỉ - Cần cù`,
+              `B. Sáng sủa - Tối tăm`,
+              `C. Cao ráo - Thấp bé`,
+              `D. Nhanh nhẹn - Chậm chạp`
+            ]
+          },
+          {
+            q: `Từ ngữ nào sau đây viết ĐÚNG chính tả?`,
+            options: [
+              `A. Xinh xắn`,
+              `B. Sinh xắn`,
+              `C. Xinh xắng`,
+              `D. Chăn chỉ`
+            ]
+          },
+          {
+            q: `Bộ phận in đậm trong câu "Các bạn học sinh đang chăm chú nghe giảng" trả lời cho câu hỏi nào?`,
+            options: [
+              `A. Là gì?`,
+              `B. Làm gì?`,
+              `C. Như thế nào?`,
+              `D. Ở đâu?`
+            ]
+          }
+        ];
+
+        m2 = [
+          `Trả lời câu hỏi: Nội dung chính của bài đọc "${cleanLesson}" giúp em hiểu thêm điều gì về tình cảm bạn bè hoặc tình thầy trò?`,
+          `Đặt một câu có sử dụng biện pháp so sánh để miêu tả một sự vật hoặc nhân vật nổi bật trong bài "${cleanLesson}".`,
+          `Tìm 2 từ chỉ đặc điểm và 2 từ chỉ hoạt động có trong bài học "${cleanLesson}".`,
+          `Viết lại câu sau bằng cách thêm bộ phận trả lời cho câu hỏi "Ở đâu?": "Các bạn học sinh cùng nhau chăm sóc bồn hoa."`
+        ];
+
+        m3 = [
+          `Viết đoạn văn ngắn (từ 4 đến 5 câu) bày tỏ cảm nghĩ của em về một việc làm tốt hoặc một nhân vật mà em ngưỡng mộ trong bài "${cleanLesson}".`,
+          `Đóng vai một nhân vật trong bài đọc, hãy viết 2-3 câu nhắn nhủ tới các bạn cùng lớp để lan tỏa lối sống đẹp và tinh thần học hỏi.`,
+          `Vận dụng vào thực tế: Em hãy nêu 2 việc làm cụ thể của bản thân ở trường hoặc ở nhà để thực hiện tốt bài học hôm nay.`
+        ];
+
+        answers = [
+          `Mức 1: Đáp án trắc nghiệm đúng dựa trên ngữ liệu bài đọc trong sách Kết nối tri thức.`,
+          `Mức 2: Câu trả lời đủ thành phần chủ - vị; câu văn so sánh có từ ngữ so sánh phù hợp (như, là, tựa như...).`,
+          `Mức 3: Đoạn văn đủ số câu, diễn đạt mạch lạc, giàu cảm xúc và không mắc lỗi chính tả.`
+        ];
+
+        mistakes = [
+          `Viết câu thiếu chủ ngữ hoặc vị ngữ khi trả lời câu hỏi tự luận.`,
+          `Quên đặt dấu chấm kết thúc câu hoặc đặt sai vị trí dấu phẩy.`,
+          `Dùng từ nối lặp lại nhiều lần (và, rồi thì) trong đoạn văn cảm nghĩ.`
+        ];
+      } else {
+        m1 = [
+          {
+            q: `Nội dung cốt lõi của bài học "${cleanLesson}" khuyên chúng ta điều gì?`,
+            options: [
+              `A. Luôn giữ gìn vệ sinh và bảo vệ môi trường chung`,
+              `B. Tự giác rèn luyện thói quen học tập và sinh hoạt khoa học`,
+              `C. Tôn trọng mọi người và biết lắng nghe người khác`,
+              `D. Thực hiện đầy đủ các quy định an toàn và nếp sống văn minh`
+            ]
+          },
+          {
+            q: `Hành động nào dưới đây là hành động ĐÚNG theo bài học "${cleanLesson}"?`,
+            options: [
+              `A. Nhắc nhở bạn bè cùng tham gia hoạt động chung`,
+              `B. Chỉ làm việc khi có người lớn nhắc nhở`,
+              `C. Tránh né nhiệm vụ được thầy cô phân công`,
+              `D. Để đồ dùng lộn xộn sau khi học xong`
+            ]
+          },
+          {
+            q: `Khi gặp tình huống cần giải quyết theo nội dung bài học, em nên ưu tiên điều gì trước?`,
+            options: [
+              `A. Báo ngay cho thầy cô hoặc người lớn đáng tin cậy`,
+              `B. Tự xử lý dù chưa nắm rõ cách làm`,
+              `C. Bỏ qua không quan tâm`,
+              `D. Chờ bạn bè làm trước rồi làm theo`
+            ]
+          },
+          {
+            q: `Việc thực hiện tốt nội dung bài học "${cleanLesson}" mang lại lợi ích gì cho bản thân em?`,
+            options: [
+              `A. Giúp bản thân tiến bộ và được mọi người quý mến`,
+              `B. Không mang lại lợi ích cụ thể nào`,
+              `C. Chỉ để nhận lời khen của giáo viên`,
+              `D. Để không bị trừ điểm thi đua`
+            ]
+          }
+        ];
+
+        m2 = [
+          `Giải thích vì sao chúng ta cần thực hiện đúng các kỹ năng/hành vi được hướng dẫn trong bài "${cleanLesson}"?`,
+          `Hãy sắp xếp các bước thực hiện hành vi đúng theo trình tự bài học trong sách Kết nối tri thức.`,
+          `Kể tên 3 việc làm cụ thể em đã thực hiện ở trường hoặc ở gia đình phù hợp với bài học này.`
+        ];
+
+        m3 = [
+          `Xử lý tình huống: Nếu chứng kiến bạn cùng lớp chưa thực hiện đúng những điều đã học trong bài "${cleanLesson}", em sẽ chia sẻ và hỗ trợ bạn như thế nào?`,
+          `Em hãy xây dựng một bản cam kết gồm 3 hành động cụ thể để rèn luyện thói quen tốt từ bài học này trong tuần tới.`
+        ];
+
+        answers = [
+          `Mức 1: Chọn đúng các phương án chuẩn mực theo mục tiêu bài học sách Kết nối tri thức.`,
+          `Mức 2: Trình bày rõ nguyên nhân và các bước thực hiện đúng quy trình.`,
+          `Mức 3: Đưa ra lời khuyên tế nhị, mang tính xây dựng; bản kế hoạch hành động khả thi.`
+        ];
+
+        mistakes = [
+          `Học sinh trả lời chung chung theo trí nhớ máy móc, chưa liên hệ thực tế bản thân.`,
+          `Chưa nắm rõ trình tự các bước thực hiện kỹ năng an toàn hoặc giải quyết vấn đề.`
+        ];
+      }
+
+      function sliceOrExtendMCQ(arr, count) {
+        let result = [];
+        for (let i = 0; i < count; i++) {
+          if (arr[i]) {
+            result.push(arr[i]);
+          } else {
+            result.push({
+              q: `Câu hỏi trắc nghiệm ${i + 1} củng cố kiến thức bài "${cleanLesson}": Khẳng định nào sau đây là chính xác?`,
+              options: [
+                `A. Khẳng định cơ bản theo nội dung bài học`,
+                `B. Khẳng định chưa hoàn toàn chuẩn xác`,
+                `C. Khẳng định không đúng với nội dung đã học`,
+                `D. Khẳng định trái ngược với kiến thức bài học`
+              ]
+            });
+          }
+        }
+        return result;
+      }
+
+      function sliceOrExtendOpen(arr, count, levelName) {
+        let result = [];
+        for (let i = 0; i < count; i++) {
+          if (arr[i]) {
+            result.push(arr[i]);
+          } else {
+            result.push(`Bài tập ${i + 1} (${levelName}): Vận dụng kiến thức bài "${cleanLesson}" (sách Kết nối tri thức) để hoàn thành yêu cầu tương tự.`);
+          }
+        }
+        return result;
+      }
+
+      return {
+        m1: sliceOrExtendMCQ(m1, n1),
+        m2: sliceOrExtendOpen(m2, n2, 'Mức 2 - Kết nối'),
+        m3: sliceOrExtendOpen(m3, n3, 'Mức 3 - Vận dụng'),
+        answers,
+        mistakes
+      };
+    }
+
+    function renderWorksheetDirectly() {
+      const grade = document.getElementById('ws-grade').value;
+      const subject = document.getElementById('ws-subject').value;
+      const book = 'Kết nối tri thức với cuộc sống';
+      const lesson = document.getElementById('ws-lesson').value.trim();
+      const goals = document.getElementById('ws-goals').value.trim();
+      const n1 = parseInt(document.getElementById('ws-n1').value, 10) || 4;
+      const n2 = parseInt(document.getElementById('ws-n2').value, 10) || 4;
+      const n3 = parseInt(document.getElementById('ws-n3').value, 10) || 3;
+      const notes = document.getElementById('ws-notes').value.trim();
+
+      if (!lesson || !goals) {
+        showToast('Cô vui lòng điền Tên bài học và Yêu cầu cần đạt nhé!');
+        return;
+      }
+
+      const generated = generateSubjectExercises(grade, subject, lesson, goals, n1, n2, n3);
+
+      const html = `
+        <div class="sheet-head">
+          <div>
+            <strong>Trường Tiểu học:</strong> ....................................<br>
+            <strong>Lớp:</strong> ${grade}... &bull; <strong>Bộ sách:</strong> ${book}
+          </div>
+          <div style="text-align: right;">
+            <strong>Họ và tên học sinh:</strong> ....................................<br>
+            <strong>Ngày:</strong> ...... / ...... / 202... &bull; <strong>Điểm/Nhận xét:</strong> ........
+          </div>
+        </div>
+
+        <div class="sheet-title-block">
+          <div class="sheet-main-title">PHIẾU HỌC TẬP ĐÁNH GIÁ 3 MỨC ĐỘ (THÔNG TƯ 27)</div>
+          <div style="font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-top: 4px;">MÔN: ${subject.toUpperCase()} ${grade} &bull; BÀI: ${lesson.toUpperCase()}</div>
+          <div class="sheet-subtitle">Yêu cầu cần đạt: ${goals}</div>
+          ${notes ? `<div style="font-size: 0.9rem; color: #64748b; margin-top: 2px;">Lưu ý của giáo viên: ${notes}</div>` : ''}
+        </div>
+
+        <!-- Mức 1: 100% trắc nghiệm 4 đáp án A, B, C, D xuống dòng -->
+        <div class="level-section">
+          <div class="level-title">🌱 PHẦN 1: MỨC 1 – TRẮC NGHIỆM NHẬN BIẾT & NHẮC LẠI KIẾN THỨC (${n1} câu)</div>
+          <div style="font-size: 0.95rem; font-style: italic; color: #475569; margin-bottom: 10px;">Khoanh tròn vào chữ cái (A, B, C hoặc D) đặt trước câu trả lời đúng nhất:</div>
+          ${generated.m1.map((item, idx) => `
+            <div class="mcq-question">
+              <strong>Câu ${idx + 1}:</strong> ${item.q}
+              <div class="mcq-options">
+                ${item.options.map(opt => `<div class="mcq-option-line">${opt}</div>`).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Mức 2: Kết nối, sắp xếp và giải quyết vấn đề tương tự -->
+        <div class="level-section m2">
+          <div class="level-title">🌿 PHẦN 2: MỨC 2 – KẾT NỐI, SẮP XẾP & GIẢI QUYẾT VẤN ĐỀ TƯƠNG TỰ (${n2} câu)</div>
+          ${generated.m2.map((q, idx) => `
+            <div class="question-item">
+              <strong>Câu ${n1 + idx + 1}:</strong> ${q}
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Mức 3: Vận dụng giải quyết vấn đề mới hoặc tình huống thực tế -->
+        <div class="level-section m3">
+          <div class="level-title">🌳 PHẦN 3: MỨC 3 – VẬN DỤNG GIẢI QUYẾT VẤN ĐỀ MỚI & THỰC TẾ (${n3} câu)</div>
+          ${generated.m3.map((q, idx) => `
+            <div class="question-item">
+              <strong>Câu ${n1 + n2 + idx + 1}:</strong> ${q}
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Đáp án tham khảo -->
+        <div class="sheet-answers-box">
+          <strong style="color: #166534; font-size: 1.05rem;">🎯 HƯỚNG DẪN CHẤM & ĐÁP ÁN THAM KHẢO (THEO THÔNG TƯ 27):</strong>
+          <ul style="margin-left: 20px; margin-top: 6px; font-size: 0.95rem;">
+            ${generated.answers.map(ans => `<li style="margin-bottom: 4px;">${ans}</li>`).join('')}
+          </ul>
+        </div>
+
+        <!-- Lỗi sai thường gặp -->
+        <div class="sheet-mistakes-box">
+          <strong style="color: #92400e; font-size: 1.05rem;">⚠️ CÁC LỖI HỌC SINH THƯỜNG MẮC PHẢI CÔ CẦN LƯU Ý KHI CHẤM BÀI:</strong>
+          <ul style="margin-left: 20px; margin-top: 6px; font-size: 0.95rem;">
+            ${generated.mistakes.map(m => `<li style="margin-bottom: 4px;">${m}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+
+      const previewContainer = document.getElementById('worksheet-preview');
+      const resultBox = document.getElementById('result-box-1');
+      if (previewContainer && resultBox) {
+        previewContainer.innerHTML = html;
+        resultBox.style.display = 'block';
+        resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        showToast('Đã tạo phiếu bài tập 3 mức thành công!');
+      }
+    }
+
+    function downloadWorksheetDoc() {
+      const sheet = document.getElementById('worksheet-preview');
+      if (!sheet || !sheet.innerHTML.trim()) {
+        showToast('Chưa có nội dung phiếu để tải về!');
+        return;
+      }
+
+      const lesson = document.getElementById('ws-lesson').value.trim() || 'Bai_hoc';
+      const grade = document.getElementById('ws-grade').value;
+      const subject = document.getElementById('ws-subject').value;
+
+      const docHtml = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+        <head>
+          <meta charset='utf-8'>
+          <title>Phiếu bài tập</title>
+          <style>
+            body {
+              font-family: 'Times New Roman', serif;
+              font-size: 13pt;
+              line-height: 1.4;
+              color: #000;
+              margin: 20mm;
+            }
+            .sheet-head {
+              width: 100%;
+              border-bottom: 2pt solid #000;
+              padding-bottom: 8pt;
+              margin-bottom: 14pt;
+            }
+            .sheet-title-block {
+              text-align: center;
+              margin-bottom: 16pt;
+            }
+            .sheet-main-title {
+              font-size: 16pt;
+              font-weight: bold;
+              text-transform: uppercase;
+            }
+            .level-section {
+              margin-bottom: 14pt;
+              padding: 6pt;
+            }
+            .level-title {
+              font-weight: bold;
+              font-size: 13pt;
+              margin-bottom: 8pt;
+              text-decoration: underline;
+            }
+            .mcq-question {
+              margin-bottom: 10pt;
+            }
+            .mcq-options {
+              margin-left: 25pt;
+              margin-top: 4pt;
+            }
+            .mcq-option-line {
+              margin-bottom: 3pt;
+            }
+            .question-item {
+              margin-bottom: 8pt;
+            }
+            .sheet-answers-box {
+              margin-top: 16pt;
+              padding: 8pt;
+              border: 1pt solid #444;
+            }
+            .sheet-mistakes-box {
+              margin-top: 10pt;
+              padding: 8pt;
+              border: 1pt solid #888;
+            }
+          </style>
+        </head>
+        <body>
+          ${sheet.innerHTML}
+        </body>
+        </html>
+      `;
+
+      const blob = new Blob(['\ufeff', docHtml], { type: 'application/msword;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const cleanFileName = `Phieu_${subject}_Lop_${grade}_${lesson.replace(/[^a-zA-Z0-9À-ỹ]/g, '_')}.doc`;
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = cleanFileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showToast('Đang tải phiếu bài tập (.doc) về máy tính của cô!');
+    }
+
+    /* Sao chép toàn bộ văn bản của Phiếu học tập */
+    function copyWorksheetText() {
+      const sheet = document.getElementById('worksheet-preview');
+      if (!sheet) return;
+      fallbackCopyText(sheet.innerText, 'Đã sao chép phiếu bài tập! Cô có thể dán (Ctrl+V) vào Word.');
+    }
+
+    function addStudentRow(code = '', level = 'Hoàn thành tốt') {
+      const tbody = document.getElementById('student-list-body');
+      if (!tbody) return;
+      const rowCount = tbody.children.length;
+
+      if (rowCount >= 20) {
+        showToast('Mỗi đợt tạo tối đa 20 học sinh để nhận xét phong phú nhất cô nhé!');
+        return;
+      }
+
+      const defaultCode = code || `HS${String(rowCount + 1).padStart(2, '0')}`;
+      const tr = document.createElement('tr');
+
+      tr.innerHTML = `
+        <td>
+          <input type="text" class="student-code-input" value="${defaultCode}" placeholder="HS01" oninput="validateStudentCode(this)" style="max-width: 150px;">
+          <div class="error-tag">Dùng mã ngắn, không dùng tên thật</div>
+        </td>
+        <td>
+          <select class="student-level-select">
+            <option value="Hoàn thành tốt" ${level === 'Hoàn thành tốt' ? 'selected' : ''}>🌟 Hoàn thành tốt (Nắm chắc bài, vận dụng sáng tạo)</option>
+            <option value="Hoàn thành" ${level === 'Hoàn thành' ? 'selected' : ''}>🌱 Hoàn thành (Đạt chuẩn kiến thức, kỹ năng)</option>
+            <option value="Chưa hoàn thành" ${level === 'Chưa hoàn thành' ? 'selected' : ''}>🤝 Chưa hoàn thành (Cần thầy cô và gia đình hỗ trợ thêm)</option>
+          </select>
+        </td>
+        <td style="text-align: center;">
+          <button type="button" class="btn-danger-outline" onclick="removeStudentRow(this)">Xóa</button>
+        </td>
+      `;
+
+      tbody.appendChild(tr);
+      validateStudentCode(tr.querySelector('.student-code-input'));
+    }
+
+    function removeStudentRow(btn) {
+      const tbody = document.getElementById('student-list-body');
+      if (!tbody) return;
+      if (tbody.children.length <= 1) {
+        showToast('Cần giữ lại ít nhất 1 dòng học sinh!');
+        return;
+      }
+      btn.closest('tr').remove();
+    }
+
+    function validateStudentCode(inputEl) {
+      if (!inputEl) return true;
+      const val = inputEl.value;
+      const errTag = inputEl.nextElementSibling;
+      const hasSpace = /\s/.test(val);
+      const isTooLong = val.length > 8;
+
+      if (isTooLong || hasSpace) {
+        if (errTag) errTag.classList.add('active');
+        inputEl.style.borderColor = 'var(--danger-color)';
+        return false;
+      } else {
+        if (errTag) errTag.classList.remove('active');
+        inputEl.style.borderColor = 'var(--border-color)';
+        return true;
+      }
+    }
+
+    const SUBJECT_FEEDBACK_BANK = {
+      "Toán": {
+        "Hoàn thành tốt": [
+          "tiếp thu bài rất nhanh, tính toán chuẩn xác và biết vận dụng linh hoạt vào các bài toán thực tế. Cô khen ngợi sự tích cực của em, em hãy tiếp tục phát huy và hướng dẫn thêm cho các bạn trong nhóm nhé!",
+          "nắm chắc kiến thức trọng tâm môn Toán, kỹ năng tính nhẩm nhanh và trình bày bài giải rất khoa học, sạch đẹp. Em hãy duy trì phong độ và thử sức thêm với các bài toán đố tư duy!",
+          "có tư duy toán học logic, lập luận chặt chẽ và luôn hoàn thành xuất sắc các bài tập trên lớp. Cô rất tự hào về tinh thần tự giác và ham học hỏi của em!",
+          "tính toán nhanh nhẹn, hiểu sâu bản chất phép tính và luôn chủ động xung phong giải bài khó trên bảng. Em hãy tiếp tục giữ vững niềm yêu thích đối với môn Toán nhé!",
+          "hoàn thành xuất sắc nhiệm vụ học tập môn Toán, thao tác chuẩn xác, chữ số rõ ràng. Em có khả năng liên hệ kiến thức toán học với các tình huống đời sống rất tốt.",
+          "nắm vững quy tắc toán học, luôn cẩn thận khi kiểm tra lại kết quả và tích cực thảo luận nhóm. Chúc em tiếp tục gặt hái thêm nhiều kết quả tốt trong môn Toán!",
+          "có năng khiếu toán học nổi bật, biết tìm ra nhiều cách giải sáng tạo và trình bày bài giải mạch lạc, chặt chẽ. Em hãy tiếp tục thử sức với các bài toán nâng cao!",
+          "chăm chú lắng nghe, nắm bắt kiến thức mới rất nhanh và thực hiện thuần thục các phép tính. Em luôn là tấm gương tự giác học tập cho các bạn cùng bàn.",
+          "thao tác đặt tính chuẩn xác, hiểu rõ bản chất bài toán có lời văn và hoàn thành bài học trước thời gian quy định. Em hãy tiếp tục phát huy sự năng động này nhé!",
+          "tư duy nhanh nhạy, ghi nhớ bảng tính rất tốt và luôn cẩn thận đối chiếu kết quả trước khi nộp bài. Cô rất tin tưởng vào sự tiến bộ bền vững của em!"
+        ],
+        "Hoàn thành": [
+          "nắm được kiến thức cơ bản của bài học và hoàn thành các bài tập tính toán. Em cần chú ý rèn thêm tính cẩn thận khi đặt tính và đọc kỹ đề toán có lời văn để tránh sai sót đáng tiếc.",
+          "có nhiều cố gắng trong giờ học Toán, hoàn thành tốt các bài tập quen thuộc. Em hãy luyện tập thêm kỹ năng tính nhẩm hàng ngày để thao tác giải toán nhanh hơn nữa nhé!",
+          "tiếp thu được nội dung bài giảng và làm được các phép tính cơ bản. Em nên chú ý trình bày bài giải cẩn thận hơn và tự tin giơ tay phát biểu ý kiến trước lớp.",
+          "đạt yêu cầu cần đạt của môn Toán, có ý thức hoàn thành nhiệm vụ được giao. Em cần rèn thêm kỹ năng phân tích bài toán thực tế để lời giải được đầy đủ và chính xác hơn.",
+          "hiểu bài và thực hiện được các phép tính theo yêu cầu. Em hãy dành thêm chút thời gian rèn chữ số và kiểm tra lại kết quả bài làm trước khi nộp bài cho cô nhé!",
+          "nắm được quy trình giải toán và hoàn thành bài tập đầy đủ. Em cần chú ý tập trung hơn ở khâu tính toán nháp để hạn chế nhầm lẫn những phép cộng trừ đơn giản.",
+          "có ý thức học tập tốt, tiếp thu được kiến thức nền tảng. Em hãy dành thêm 10 phút mỗi tối để ôn lại bảng nhân, bảng chia để giải toán thêm nhanh nhẹn.",
+          "thực hiện được các bài tập mức độ cơ bản. Em cần rèn luyện thêm kỹ năng đọc hiểu câu chữ trong đề toán để xác định đúng phép tính cần thực hiện.",
+          "hoàn thành các yêu cầu của tiết học Toán. Em chú ý viết chữ số rõ ràng, giữ vở sạch đẹp hơn và mạnh dạn hỏi cô khi gặp dạng bài chưa quen nhé!",
+          "có tiến bộ trong kỹ năng tính toán, biết lắng nghe cô giảng bài. Em hãy tự tin hơn khi tham gia hoạt động nhóm và chủ động chia sẻ cách làm của mình."
+        ],
+        "Chưa hoàn thành": [
+          "đã có cố gắng khi làm bài nhưng còn lúng túng ở kỹ năng tính toán và bảng tính cơ bản. Mỗi ngày em hãy dành thêm 15 phút ôn lại các phép tính và mạnh dạn hỏi cô khi chưa hiểu, cô luôn đồng hành cùng em!",
+          "còn gặp khó khăn khi giải bài toán có lời văn và thực hiện các phép tính nhiều bước. Em cần được thầy cô và phụ huynh kèm cặp thêm các bài tập nền tảng tại nhà.",
+          "còn thao tác tính toán chậm và dễ nhầm lẫn các bước thực hiện. Em hãy chú ý lắng nghe cô hướng dẫn trên lớp và chịu khó luyện tập thêm để tiến bộ từng ngày nhé!",
+          "chưa ghi nhớ vững bảng cộng trừ hoặc nhân chia, dẫn đến tốc độ làm bài còn chậm. Em hãy kiên trì ôn luyện bảng tính mỗi ngày cùng bố mẹ nhé!",
+          "còn nhầm lẫn khi đặt tính thẳng cột và thực hiện phép tính có nhớ. Em hãy làm từng bước thật chậm và nhờ cô kiểm tra giúp ngay tại lớp nhé!",
+          "còn lúng túng khi đọc đề bài toán có lời văn, chưa xác định rõ đề bài cho gì và hỏi gì. Em hãy tập gạch chân dưới các số liệu quan trọng khi đọc đề nhé!",
+          "đôi lúc còn thiếu tập trung trong giờ học dẫn đến chưa nắm chắc quy tắc tính. Em cố gắng chú ý nghe giảng và tích cực giơ tay hơn trong các tiết học tới!",
+          "cần rèn thêm kỹ năng tính nháp và viết chữ số rõ nét để tránh nhìn nhầm số liệu của chính mình. Cô tin em sẽ tiến bộ nếu kiên trì luyện tập đều đặn!",
+          "chưa tự tin khi làm bài kiểm tra và còn phụ thuộc vào gợi ý của cô. Em hãy mạnh dạn tự làm từ các câu dễ trước và tin tưởng vào khả năng của mình nhé!",
+          "tốc độ tiếp thu bài còn chậm, cần thêm thời gian để hoàn thành bài tập trên lớp. Thầy cô và gia đình sẽ luôn đồng hành hỗ trợ để em nắm chắc bài hơn."
+        ]
+      },
+      "Tiếng Việt": {
+        "Hoàn thành tốt": [
+          "đọc to, rõ ràng, ngắt nghỉ đúng ngữ điệu và diễn đạt câu văn rất giàu cảm xúc. Chữ viết của em nắn nót, đúng chính tả. Em hãy tiếp tục phát huy năng khiếu văn học này nhé!",
+          "có vốn từ phong phú, trả lời câu hỏi đọc hiểu sâu sắc và biết dùng từ gợi tả, gợi cảm khi viết đoạn văn. Cô rất khen ngợi tinh thần say mê đọc sách của em!",
+          "nắm chắc quy tắc chính tả, dùng từ đặt câu gãy gọn và giàu hình ảnh. Em thể hiện sự tự tin và diễn đạt mạch lạc trong các hoạt động luyện nói.",
+          "đọc diễn cảm rất hay, nắm bắt nội dung bài đọc nhanh và sáng tạo trong các bài tập viết ngắn. Em hãy tiếp tục duy trì niềm yêu thích với môn Tiếng Việt nhé!",
+          "hoàn thành xuất sắc các bài tập chính tả và luyện từ và câu. Vở ghi của em luôn sạch đẹp, chữ viết ngay ngắn và câu văn rất trong sáng.",
+          "có giọng đọc truyền cảm, biết nhấn giọng ở những từ ngữ giàu hình ảnh và trả lời câu hỏi đọc hiểu rất thông minh. Thật đáng khen ngợi!",
+          "biết sử dụng linh hoạt các biện pháp so sánh, nhân hóa giúp câu văn thêm sinh động, hấp dẫn. Em hãy tiếp tục đọc thêm nhiều sách hay nhé!",
+          "viết đúng quy tắc chính tả, khoảng cách các con chữ đều đặn, bài viết sạch sẽ. Em có khả năng diễn đạt lưu loát cả trong nói và viết.",
+          "nắm vững kiến thức ngữ pháp, biết liên kết các câu văn chặt chẽ và chọn lọc từ ngữ chính xác. Cô rất tự hào về tinh thần tự học của em!",
+          "thể hiện cảm xúc chân thành, tự nhiên trong từng bài viết; kỹ năng lắng nghe và tương tác trong giờ học rất tốt. Chúc em ngày càng yêu thích môn học này!"
+        ],
+        "Hoàn thành": [
+          "đọc bài to rõ ràng và hiểu được nội dung cơ bản của bài đọc. Em cần chú ý rèn thêm chữ viết cho đúng độ cao và đọc ngắt nghỉ đúng dấu câu hơn.",
+          "hoàn thành yêu cầu bài học, trả lời được các câu hỏi đọc hiểu. Em hãy mở rộng vốn từ bằng cách đọc thêm sách truyện thiếu nhi và chú ý viết hoa đầu câu đúng quy định.",
+          "có tiến bộ trong kỹ năng viết chính tả, nắm được nội dung bài học. Em cần rèn luyện thêm kỹ năng diễn đạt câu văn cho mạch lạc và tránh lặp từ khi viết đoạn văn.",
+          "đọc lưu loát, hoàn thành các bài tập Tiếng Việt trên lớp. Em nên chú ý rèn tính cẩn thận để hạn chế viết sai các phụ âm đầu hoặc dấu thanh dễ nhầm lẫn.",
+          "hiểu nội dung bài đọc và trả lời được các câu hỏi mức nhận biết. Em nên chú ý rèn nét chữ tròn đều hơn và trau chuốt câu văn trả lời cho tròn ý.",
+          "đọc đúng tốc độ quy định, trả lời được ý chính của bài. Em hãy dành thêm thời gian đọc sách để tích lũy thêm nhiều từ ngữ hay cho bài viết của mình.",
+          "nắm được quy tắc ngữ pháp cơ bản, làm đúng bài tập chính tả. Em cần rèn thêm kỹ năng diễn đạt câu văn sao cho mạch lạc, tránh dùng từ lặp lại nhiều lần.",
+          "có ý thức rèn chữ giữ vở, hoàn thành bài tập trên lớp. Em hãy tự tin giơ tay phát biểu nhiều hơn để rèn luyện kỹ năng nói trước đám đông nhé!",
+          "hoàn thành các bài tập luyện từ và câu. Em cần chú ý đặt dấu chấm, dấu phẩy đúng vị trí để câu văn được rõ ràng và mạch lạc hơn.",
+          "tiếp thu bài tốt, đọc bài trôi chảy. Em cần chú ý đọc thong thả hơn ở những câu dài và rèn thêm độ đều của nét chữ khi viết đoạn văn."
+        ],
+        "Chưa hoàn thành": [
+          "còn đọc ngắc ngứ và dễ mắc lỗi chính tả khi viết bài. Mỗi ngày em hãy dành thời gian đọc to 1 đoạn truyện ngắn và rèn viết lại các từ khó, cô tin em sẽ tiến bộ rõ rệt!",
+          "còn lúng túng khi trả lời câu hỏi đọc hiểu và vốn từ còn hạn chế. Em cần được thầy cô và gia đình hỗ trợ rèn kỹ năng ghép âm vần và viết câu đầy đủ chủ ngữ, vị ngữ.",
+          "tốc độ đọc và viết còn chậm so với yêu cầu bài học. Em hãy kiên trì rèn luyện viết chữ mỗi ngày và mạnh dạn nhờ cô hướng dẫn thêm nhé!",
+          "còn phát âm nhầm lẫn giữa một số âm đầu và dấu thanh dẫn đến viết sai chính tả. Em hãy chú ý lắng nghe cô phát âm mẫu và luyện đọc lại hàng ngày.",
+          "câu văn khi viết đoạn còn cụt ngủn, thiếu bộ phận vị ngữ hoặc dấu kết thúc câu. Em hãy tập thói quen đọc lại câu văn sau khi viết để tự sửa lỗi nhé!",
+          "chưa nắm chắc nội dung bài đọc, còn rụt rè khi trả lời câu hỏi của cô. Em hãy đọc bài trước ở nhà và mạnh dạn chia sẻ suy nghĩ của mình trên lớp nhé!",
+          "chữ viết còn chưa đúng kích cỡ, khoảng cách giữa các chữ chưa đều và còn tẩy xóa. Em hãy rèn viết chậm lại, nắn nót từng nét chữ trên vở ô li.",
+          "còn nhầm lẫn khi phân loại từ chỉ sự vật, hoạt động và đặc điểm. Em cần chú ý nghe cô hướng dẫn và làm thêm bài tập củng cố tại lớp.",
+          "tốc độ viết chính tả còn chậm, chưa theo kịp tốc độ đọc của lớp. Gia đình và cô sẽ phối hợp kèm cặp thêm để giúp em bắt nhịp tốt hơn.",
+          "còn ngại nói trước lớp và chưa diễn đạt được trọn vẹn ý nghĩ. Em hãy tự tin luyện nói từng câu ngắn với bạn bè và cô giáo mỗi ngày nhé!"
+        ]
+      },
+      "Tự nhiên và Xã hội / Khoa học": {
+        "Hoàn thành tốt": [
+          "rất hào hứng tìm hiểu thế giới xung quanh, quan sát tinh tế và biết vận dụng kiến thức khoa học vào việc bảo vệ sức khỏe và môi trường. Rất đáng biểu dương!",
+          "nắm chắc kiến thức bài học, tích cực phát biểu xây dựng bài và có ý thức tự giác cao trong các hoạt động trải nghiệm khoa học.",
+          "có tinh thần tìm tòi khám phá, giải thích được các hiện tượng tự nhiên đơn giản gần gũi với đời sống. Em hãy tiếp tục lan tỏa tình yêu thiên nhiên đến các bạn nhé!",
+          "chủ động quan sát, đặt ra nhiều câu hỏi thú vị và biết liên hệ bài học với thực tế gia đình rất sinh động. Cô khen ngợi tính ham học hỏi của em!",
+          "hoàn thành xuất sắc các phiếu quan sát và thí nghiệm khoa học đơn giản. Kỹ năng làm việc nhóm và bảo vệ môi trường của em rất đáng khen ngợi.",
+          "có hiểu biết phong phú về thế giới tự nhiên, biết cách tự chăm sóc bản thân và giữ gìn vệ sinh chung. Em luôn là hạt nhân tích cực trong giờ học!",
+          "nắm vững bài học, diễn đạt rõ ràng các hiện tượng tự nhiên và biết giải thích nguyên nhân đơn giản. Hãy tiếp tục phát huy năng lực khoa học này nhé!",
+          "tích cực tham gia các dự án học tập, có nhiều ý tưởng sáng tạo trong việc tái chế và bảo vệ cây xanh. Cô rất tự hào về ý thức của em!",
+          "thao tác thí nghiệm cẩn thận, ghi chép kết quả chính xác và tự tin trình bày kết quả trước lớp. Em hãy giữ vững phong độ học tập này nhé!",
+          "hiểu sâu sắc mối quan hệ giữa con người và thiên nhiên, luôn đi đầu trong việc giữ gìn vệ sinh lớp học. Rất đáng biểu dương và khen ngợi!"
+        ],
+        "Hoàn thành": [
+          "nắm được các kiến thức tự nhiên và xã hội cơ bản theo bài học. Em cần tự tin hơn khi tham gia thảo luận nhóm và liên hệ thực tế nhiều hơn với bản thân.",
+          "hoàn thành tốt các nhiệm vụ quan sát và trả lời câu hỏi trong sách giáo khoa. Em hãy chú ý áp dụng các thói quen vệ sinh và an toàn đã học vào cuộc sống hàng ngày.",
+          "tiếp thu được kiến thức bài giảng, biết kể tên các sự vật hiện tượng quen thuộc. Em nên chủ động chia sẻ ý kiến của mình cùng các bạn trong nhóm nhé.",
+          "hoàn thành phiếu học tập đúng thời gian. Em hãy chú ý quan sát thế giới xung quanh nhiều hơn để có thêm dẫn chứng thực tế cho bài học.",
+          "nắm được nội dung chính của bài, có ý thức giữ gìn vệ sinh cá nhân. Em cần rèn thêm kỹ năng trình bày mạch lạc trước lớp khi phát biểu ý kiến.",
+          "đạt yêu cầu cần đạt của bài học. Em hãy chú ý lắng nghe các bạn báo cáo kết quả quan sát để học hỏi thêm nhiều kiến thức bổ ích nhé.",
+          "hiểu được các quy tắc an toàn cơ bản ở nhà và ở trường. Em hãy kiên trì rèn luyện để các quy tắc đó trở thành thói quen hàng ngày của bản thân.",
+          "tham gia đầy đủ các hoạt động học tập, làm được bài tập trắc nghiệm cơ bản. Em nên tích cực giơ tay hơn trong các tiết học khám phá thiên nhiên.",
+          "biết cách quan sát tranh ảnh và rút ra nhận xét theo hướng dẫn của cô. Em hãy tự tin hơn khi đưa ra ví dụ thực tế từ cuộc sống gia đình.",
+          "hoàn thành các nhiệm vụ học tập theo hướng dẫn. Em chú ý ghi chép cẩn thận hơn các hiện tượng quan sát được trong giờ thực hành nhé."
+        ],
+        "Chưa hoàn thành": [
+          "còn thụ động trong giờ học và chưa ghi nhớ các kiến thức an toàn, tự nhiên cơ bản. Em cần chú ý theo dõi bài học và tích cực trao đổi cùng các bạn trong nhóm.",
+          "chưa tập trung quan sát tranh ảnh và thí nghiệm mẫu trên lớp. Em hãy chú ý lắng nghe cô hướng dẫn để nắm được bài học tốt hơn nhé.",
+          "còn lúng túng khi kể tên các bộ phận cơ thể hoặc các hiện tượng tự nhiên đơn giản. Em cần xem lại bài học cùng bố mẹ sau mỗi tiết học.",
+          "chưa chủ động tham gia hoạt động nhóm cùng các bạn, còn rụt rè khi làm bài tập thực hành. Cô và các bạn luôn sẵn sàng hỗ trợ em!",
+          "dễ quên các quy tắc an toàn và vệ sinh đã học. Em hãy ghi nhớ và thực hiện từng việc nhỏ mỗi ngày như rửa tay đúng cách, bỏ rác đúng nơi quy định.",
+          "còn nhầm lẫn giữa các nhóm động thực vật quen thuộc. Em hãy dành thêm thời gian quan sát tranh ảnh trong sách giáo khoa để phân biệt rõ hơn nhé.",
+          "chưa hoàn thành phiếu quan sát trong thời gian quy định trên lớp. Em cần tập trung hơn và mạnh dạn nhờ cô giải thích khi chưa hiểu bài.",
+          "còn ít phát biểu và chưa tự tin chia sẻ những điều mình biết về thế giới xung quanh. Em hãy mạnh dạn giơ tay chia sẻ cùng cả lớp nhé!",
+          "cần rèn luyện thêm ý thức tự giác giữ gìn đồ dùng học tập và vệ sinh bàn học của mình. Cô tin em sẽ tiến bộ hơn trong các tuần tới.",
+          "tốc độ ghi nhớ các kiến thức khoa học đời sống còn chậm. Gia đình và giáo viên sẽ tiếp tục nhắc nhở và đồng hành hỗ trợ em hàng ngày."
+        ]
+      },
+      "Lịch sử và Địa lí": {
+        "Hoàn thành tốt": [
+          "ghi nhớ các sự kiện và nhân vật lịch sử rất tốt, biết đọc lược đồ địa lí và trình bày tự tin trước lớp. Em có tinh thần tự hào dân tộc rất đáng khen ngợi!",
+          "nắm chắc đặc điểm địa lí các vùng miền và diễn biến các sự kiện lịch sử đã học. Cô khen ngợi trí nhớ tốt và sự chăm chỉ tìm hiểu tài liệu của em!",
+          "sử dụng bản đồ, lược đồ rất thành thạo, xác định vị trí địa lí chuẩn xác và trả lời câu hỏi liên hệ thực tế rất sâu sắc.",
+          "có niềm say mê tìm hiểu lịch sử, ghi nhớ mốc thời gian chính xác và diễn đạt câu chuyện lịch sử rất truyền cảm. Rất đáng biểu dương!",
+          "hiểu rõ đặc điểm tự nhiên và kinh tế các khu vực, biết so sánh đặc điểm giữa các vùng miền một cách khoa học và rõ ràng.",
+          "luôn chuẩn bị bài chu đáo, tích cực đóng góp ý kiến trong các hoạt động nhóm và thể hiện lòng yêu quê hương đất nước sâu sắc.",
+          "biết kết hợp quan sát lược đồ với kiến thức bài học để rút ra nhận xét chính xác. Em hãy tiếp tục phát huy năng lực tự học tuyệt vời này nhé!",
+          "nắm chắc bài học, có khả năng tóm tắt sự kiện lịch sử bằng sơ đồ tư duy ngắn gọn, đẹp mắt. Cô rất tự hào về phương pháp học tập của em!",
+          "chủ động tìm đọc thêm nhiều câu chuyện lịch sử hay, kể lại lưu loát và rút ra bài học ý nghĩa cho bản thân. Rất đáng khen ngợi!",
+          "hoàn thành xuất sắc mọi nhiệm vụ học tập môn Lịch sử và Địa lí, tư duy mạch lạc và luôn sẵn lòng giúp đỡ các bạn cùng tiến bộ."
+        ],
+        "Hoàn thành": [
+          "nắm được các mốc sự kiện và kiến thức địa lí trọng tâm. Em cần rèn thêm kỹ năng quan sát lược đồ, bản đồ để việc học đạt kết quả tốt hơn.",
+          "hoàn thành yêu cầu môn học. Em hãy chú ý xâu chuỗi các sự kiện theo dòng thời gian để ghi nhớ bài học được sâu sắc hơn.",
+          "nhận biết được các vùng địa lí cơ bản trên bản đồ. Em nên dành thêm thời gian đọc lại các câu chuyện lịch sử để ghi nhớ nhân vật lâu hơn nhé.",
+          "trả lời được các câu hỏi cơ bản trong sách giáo khoa. Em cần chú ý rèn kỹ năng xác định phương hướng và kí hiệu trên bản đồ địa lí.",
+          "có ý thức học tập tốt, hoàn thành các bài tập trên lớp. Em hãy tự tin hơn khi đứng lên trình bày các sự kiện lịch sử trước tập thể lớp.",
+          "nắm được các đặc điểm tự nhiên chính của các vùng miền. Em chú ý liên hệ thêm với đặc điểm khí hậu và đời sống con người để bài học thêm sinh động.",
+          "ghi nhớ được nội dung cơ bản của bài học. Em hãy vẽ sơ đồ thời gian đơn giản để không bị nhầm lẫn giữa các giai đoạn lịch sử khác nhau nhé.",
+          "hoàn thành bài tập trong vở bài tập đầy đủ. Em nên chủ động hơn khi tham gia các hoạt động tìm hiểu lịch sử địa phương cùng các bạn.",
+          "tiếp thu bài tốt và có thái độ học tập nghiêm túc. Em hãy chú ý rèn cách diễn đạt câu trả lời cho gãy gọn và giàu cảm xúc hơn.",
+          "biết cách tra cứu thông tin trên lược đồ theo gợi ý của cô. Em hãy tập thói quen quan sát bảng chú giải trước khi đọc bản đồ nhé."
+        ],
+        "Chưa hoàn thành": [
+          "còn nhầm lẫn giữa các mốc thời gian và sự kiện lịch sử. Em cần dành thêm thời gian đọc lại bài học và vẽ sơ đồ tư duy đơn giản để ghi nhớ dễ dàng hơn.",
+          "còn lúng túng khi chỉ vị trí các địa danh trên bản đồ, lược đồ. Em hãy nhờ cô và bạn hướng dẫn thêm cách đọc bảng chú giải nhé.",
+          "chưa ghi nhớ được tên các nhân vật và sự kiện lịch sử tiêu biểu. Mỗi ngày em hãy đọc lại một mẩu chuyện lịch sử ngắn để khắc sâu kiến thức.",
+          "còn thụ động trong giờ học, ít phát biểu và chưa hoàn thành bài tập đúng hạn. Em hãy cố gắng tập trung hơn để theo kịp tiến độ của lớp.",
+          "dễ nhầm lẫn đặc điểm địa hình giữa các vùng miền. Em hãy quan sát kỹ màu sắc trên bản đồ tự nhiên để nhận biết rõ ràng hơn nhé.",
+          "chưa nắm được ý nghĩa của các ngày lễ lịch sử lớn. Em hãy chú ý lắng nghe cô kể chuyện trong giờ học để ghi nhớ bài tốt hơn.",
+          "còn rụt rè khi làm việc nhóm và chưa hoàn thành nhiệm vụ được phân công. Em hãy tự tin trao đổi cùng các bạn trong tổ của mình nhé.",
+          "tốc độ tiếp thu kiến thức còn chậm, cần sự nhắc nhở thường xuyên của giáo viên. Gia đình và nhà trường sẽ tiếp tục đồng hành hỗ trợ em.",
+          "chưa chú ý ghi chép bài đầy đủ vào vở. Em cần rèn luyện thói quen ghi nhớ các ý chính theo hướng dẫn của cô trên bảng.",
+          "cần rèn thêm tính kiên trì khi đọc các bài đọc lịch sử dài. Cô tin em sẽ tiến bộ từng ngày nếu chịu khó rèn luyện đều đặn."
+        ]
+      },
+      "Tiếng Anh": {
+        "Hoàn thành tốt": [
+          "phát âm chuẩn, ghi nhớ từ vựng nhanh và rất tự tin khi giao tiếp bằng tiếng Anh trong lớp. Em có phản xạ ngôn ngữ rất tuyệt vời, tiếp tục phát huy nhé!",
+          "hoàn thành xuất sắc các bài luyện nghe và nói tiếng Anh. Em sử dụng mẫu câu linh hoạt và luôn tích cực tương tác cùng thầy cô và bạn bè.",
+          "có ngữ điệu nói tự nhiên, vốn từ phong phú và luôn hăng hái tham gia các trò chơi ngôn ngữ. Cô rất khen ngợi tinh thần tự tin của em!",
+          "nắm chắc cấu trúc câu, viết đúng chính tả các từ vựng mới và phát âm rất rõ ràng. Em hãy tiếp tục duy trì niềm đam mê học ngoại ngữ nhé!",
+          "thực hiện các đoạn hội thoại rất trôi chảy, phản xạ nhanh và luôn chủ động hỗ trợ bạn cùng bàn luyện nói. Rất đáng biểu dương!",
+          "ghi nhớ bài hát và mẫu câu tiếng Anh rất nhanh, giọng phát âm chuẩn xác và rất giàu năng lượng tích cực trong mỗi tiết học.",
+          "kỹ năng nghe hiểu rất tốt, bắt nhịp nhanh với bài giảng và hoàn thành bài tập ngữ pháp nhanh chóng, chuẩn xác.",
+          "tự tin đóng vai trong các hoạt động thuyết trình ngắn bằng tiếng Anh, biểu cảm sinh động và vốn từ mở rộng rất phong phú.",
+          "chăm chỉ luyện tập, phát âm các âm đuôi rất chuẩn và biết vận dụng mẫu câu vào các tình huống giao tiếp hàng ngày trên lớp.",
+          "hoàn thành xuất sắc cả 4 kỹ năng nghe, nói, đọc, viết theo chuẩn lứa tuổi. Chúc em tiếp tục gặt hái thêm nhiều thành tích xuất sắc!"
+        ],
+        "Hoàn thành": [
+          "nắm được các từ vựng và mẫu câu cơ bản trong bài. Em cần rèn luyện thêm kỹ năng nghe và tự tin mở lời giao tiếp nhiều hơn trong giờ học.",
+          "hoàn thành các bài tập ngữ pháp và từ vựng. Em hãy nghe thêm các bài hát tiếng Anh thiếu nhi để rèn luyện phát âm tự nhiên hơn.",
+          "hiểu được hiệu lệnh của giáo viên và nhắc lại được các từ mới. Em hãy chú ý phát âm rõ các âm cuối của từ để lời nói chuẩn xác hơn.",
+          "viết được các từ vựng quen thuộc vào vở. Em cần chú ý rèn thêm tính cẩn thận để không viết thiếu chữ cái trong các từ dài.",
+          "tham gia các hoạt động luyện tập cùng bạn, nói được các câu đơn giản. Em hãy mạnh dạn nói to, rõ ràng hơn trước lớp nhé.",
+          "đạt chuẩn kiến thức bài học, làm đúng bài tập nối từ và điền từ. Em nên luyện nghe băng nhiều lần để nâng cao phản xạ nghe hiểu.",
+          "nắm được cấu trúc câu cơ bản. Em hãy dành thêm 10 phút mỗi ngày luyện đọc to các đoạn hội thoại ngắn để giọng nói được lưu loát hơn.",
+          "hoàn thành bài tập về nhà đầy đủ. Em hãy chú ý quan sát khẩu hình của cô khi phát âm để bắt chước khẩu hình chuẩn xác hơn.",
+          "có ý thức học tập tốt, ngoan ngoãn. Em hãy tự tin giơ tay xung phong đóng vai trong các bài luyện nói tiếng Anh trên lớp nhé.",
+          "tiếp thu bài ổn định. Em chú ý ôn lại từ vựng cũ đều đặn vào cuối tuần để không bị quên các mẫu câu đã học trước đó."
+        ],
+        "Chưa hoàn thành": [
+          "còn rụt rè và chưa nhớ các từ vựng cơ bản. Mỗi ngày em hãy tập phát âm lại 3-5 từ vựng mới và mạnh dạn tham gia các trò chơi học tập trên lớp nhé!",
+          "còn lúng túng khi phát âm từ mới và chưa nhận diện được mặt chữ tiếng Anh. Em cần được thầy cô và phụ huynh kèm cặp thêm ở nhà.",
+          "chưa tự tin khi nói tiếng Anh, phát âm còn nhỏ và ngập ngừng. Em hãy mạnh dạn nói to theo cô và bạn bè, đừng sợ sai nhé!",
+          "còn hay viết nhầm thứ tự các chữ cái trong từ vựng. Em hãy luyện viết lại mỗi từ mới 2-3 lần vào vở nháp để ghi nhớ mặt chữ tốt hơn.",
+          "chưa bắt kịp các bài luyện nghe trên lớp. Em hãy tập trung lắng nghe các từ khóa quen thuộc và nhờ cô bật lại băng khi chưa rõ.",
+          "còn thụ động trong giờ học, ít khi giơ tay phát biểu hoặc tương tác cùng bạn. Cô và cả lớp luôn sẵn lòng đồng hành cùng em!",
+          "dễ quên các cấu trúc câu giao tiếp đơn giản vừa học. Em hãy nhờ bố mẹ hỗ trợ mở lại video bài học ngắn để nghe lại mỗi buổi tối.",
+          "cần rèn thêm tính kiên trì khi học từ mới và giữ gìn vở ghi cẩn thận hơn. Cô tin em sẽ tiến bộ nếu chịu khó luyện tập hàng ngày.",
+          "chưa hiểu rõ nghĩa của các từ chỉ hành động và màu sắc quen thuộc. Em hãy kết hợp nhìn tranh minh họa để ghi nhớ từ vựng dễ hơn nhé.",
+          "tốc độ tiếp thu ngôn ngữ mới còn chậm. Gia đình và nhà trường sẽ phối hợp khích lệ để em thêm tự tin và hứng thú với môn học."
+        ]
+      },
+      "Tin học": {
+        "Hoàn thành tốt": [
+          "thao tác trên máy tính thành thạo, gõ bàn phím đúng cách và vận dụng tốt các phần mềm học tập. Em có tư duy công nghệ rất tốt và luôn sẵn sàng hỗ trợ bạn bè!",
+          "tiếp thu nhanh các bài học Tin học, thực hành bài tập nhanh và chính xác. Cô rất khen ngợi ý thức bảo vệ thiết bị và tuân thủ nội quy phòng máy của em.",
+          "sử dụng chuột và bàn phím rất khéo léo, thao tác lưu mở tệp khoa học và vẽ tranh trên máy tính rất sáng tạo, đẹp mắt.",
+          "hiểu rõ nguyên tắc an toàn khi sử dụng máy tính và mạng internet, luôn hoàn thành bài thực hành trước thời gian quy định.",
+          "có tư duy thuật toán logic, nhanh chóng nắm bắt các câu lệnh lập trình đơn giản và luôn chủ động tìm tòi tính năng mới trên phần mềm.",
+          "gõ phím bằng 10 ngón tay có tiến bộ vượt bậc, tư thế ngồi học chuẩn và có tinh thần giúp đỡ bạn bè trong giờ thực hành rất đáng khen.",
+          "hoàn thành xuất sắc các sản phẩm học tập trên máy tính, trình bày văn bản ngay ngắn, chọn phông chữ và hình ảnh rất hài hòa.",
+          "chủ động khám phá các phần mềm luyện tập bổ ích, thao tác dứt khoát và có ý thức giữ gìn phòng máy sạch sẽ, ngăn nắp.",
+          "có năng khiếu tin học nổi bật, hiểu bài nhanh và luôn xung phong lên máy chủ thực hiện mẫu cho cả lớp quan sát.",
+          "nắm chắc kiến thức lý thuyết và thực hành xuất sắc các bài tập môn Tin học. Em hãy tiếp tục nuôi dưỡng niềm đam mê công nghệ này nhé!"
+        ],
+        "Hoàn thành": [
+          "thực hiện được các thao tác cơ bản theo hướng dẫn của cô. Em cần chú ý rèn thêm thao tác sử dụng chuột và luyện gõ phím nhanh hơn.",
+          "hoàn thành các bài tập thực hành trên máy. Em hãy chú ý ghi nhớ các tổ hợp phím tắt để thao tác được tiện lợi và chuyên nghiệp hơn.",
+          "biết cách bật tắt máy đúng quy trình và mở được phần mềm học tập. Em cần rèn thêm cách cầm chuột chuẩn để thao tác nhấp đúp không bị trượt.",
+          "nắm được quy tắc gõ chữ tiếng Việt trên bàn phím. Em nên luyện gõ thường xuyên hơn để tăng tốc độ gõ bài và đúng vị trí các ngón tay.",
+          "thực hiện được các bước vẽ hình và tô màu cơ bản. Em hãy cẩn thận hơn khi chọn màu và viền hình để sản phẩm thêm đẹp mắt.",
+          "hoàn thành bài thực hành trong giờ học. Em cần chú ý lắng nghe kỹ hướng dẫn lưu bài vào đúng thư mục quy định để không bị lạc mất tệp.",
+          "biết cách sử dụng các công cụ cơ bản trong phần mềm soạn thảo. Em hãy chú ý căn lề và chọn cỡ chữ phù hợp cho bài viết của mình.",
+          "chấp hành tốt nội quy phòng máy tính. Em hãy chủ động hơn trong việc tìm kiếm sự trợ giúp từ bạn bè khi gặp thao tác khó.",
+          "tiếp thu bài tốt, hoàn thành nhiệm vụ được giao. Em nên dành thêm thời gian luyện tập gõ 10 ngón trên các phần mềm trò chơi học tập.",
+          "thực hiện được các thao tác tìm kiếm thông tin cơ bản. Em hãy rèn thêm tính cẩn thận khi nhấn các nút lệnh để tránh xóa nhầm nội dung."
+        ],
+        "Chưa hoàn thành": [
+          "còn lúng túng khi sử dụng chuột và thao tác lưu bài trên máy tính. Em cần chú ý quan sát cô làm mẫu và mạnh dạn nhờ cô hỗ trợ trong giờ thực hành.",
+          "cầm chuột chưa đúng cách và hay bấm nhầm phím trên bàn phím. Em hãy thả lỏng tay và thực hiện từng thao tác thật chậm rãi nhé.",
+          "chưa nhớ các bước khởi động và thoát phần mềm đúng quy trình. Em cần chú ý lắng nghe và làm theo từng bước cô hướng dẫn trên bảng.",
+          "tốc độ gõ phím còn rất chậm, hay gõ bằng 1 ngón tay và chưa tìm thấy vị trí các chữ cái. Em hãy kiên trì luyện tập theo hàng phím cơ sở nhé.",
+          "còn hay quên tên thư mục lưu bài và làm mất sản phẩm vừa tạo. Em hãy tập thói quen lưu bài ngay từ khi bắt đầu làm bài tập nhé.",
+          "dễ mất tập trung và bấm nhầm vào các nút cài đặt của máy tính. Em cần tuân thủ nghiêm túc nội dung bài học và sự hướng dẫn của cô.",
+          "chưa tự tin khi ngồi trước máy tính và còn sợ làm hỏng thiết bị. Đừng lo lắng em nhé, cô luôn ở bên cạnh để giúp đỡ em!",
+          "còn nhầm lẫn giữa nhấp chuột trái và nhấp chuột phải. Em hãy luyện tập thêm các trò chơi luyện chuột đơn giản để tay thêm linh hoạt.",
+          "chưa hoàn thành được sản phẩm thực hành trong tiết học. Em cần chú ý nghe giảng phần lý thuyết để khi thực hành không bị bỡ ngỡ.",
+          "cần được cô và các bạn kèm cặp thêm trong các giờ thực hành phòng máy. Cô tin em sẽ thành thạo hơn sau vài buổi luyện tập tới!"
+        ]
+      },
+      "Công nghệ": {
+        "Hoàn thành tốt": [
+          "khéo tay, thực hiện các sản phẩm thủ công - công nghệ đúng quy trình, sáng tạo và rất đẹp mắt. Em luôn hoàn thành bài sớm và giữ vệ sinh góc học tập sạch sẽ.",
+          "hiểu rõ nguyên lí hoạt động của các đồ dùng công nghệ trong gia đình và có ý thức sử dụng an toàn, tiết kiệm điện năng rất đáng khen ngợi.",
+          "thao tác cắt dán, lắp ghép rất tỉ mỉ, chuẩn xác; sản phẩm có tính thẩm mỹ cao và màu sắc hài hòa. Rất đáng biểu dương!",
+          "nắm chắc quy trình an toàn khi sử dụng các thiết bị điện trong nhà, biết nhắc nhở mọi người xung quanh cùng thực hiện tiết kiệm.",
+          "có nhiều ý tưởng độc đáo khi thiết kế sản phẩm học tập, biết tận dụng nguyên vật liệu tái chế để làm ra các đồ chơi hữu ích.",
+          "chủ động chuẩn bị đầy đủ vật liệu, thao tác khéo léo và luôn dọn dẹp bàn học sạch sẽ sau khi hoàn thành sản phẩm. Thật đáng khen!",
+          "biết phân tích cấu tạo và chức năng của các đồ dùng gia đình rất rành mạch, kỹ năng làm việc nhóm và chia sẻ dụng cụ rất tốt.",
+          "luôn thể hiện sự kiên trì, cẩn trọng trong từng đường gấp, nếp cắt; sản phẩm hoàn thiện rất chắc chắn và có tính sáng tạo cao.",
+          "nắm vững kiến thức bài học, tích cực tham gia các dự án sáng tạo kỹ thuật nhỏ và luôn sẵn lòng hướng dẫn cho các bạn trong tổ.",
+          "hoàn thành xuất sắc mục tiêu môn Công nghệ, có ý thức bảo quản đồ dùng bền lâu và có tư duy thiết kế rất nhạy bén."
+        ],
+        "Hoàn thành": [
+          "thực hiện được các sản phẩm công nghệ theo mẫu của bài học. Em cần chú ý rèn thêm tính cẩn thận và tỉ mỉ trong từng khâu hoàn thiện sản phẩm.",
+          "hoàn thành yêu cầu môn học, nắm được các quy tắc an toàn công nghệ. Em hãy chủ động hơn trong các hoạt động lắp ghép, thực hành nhóm.",
+          "làm ra sản phẩm đúng kích thước và quy trình. Em chú ý bôi hồ dán vừa phải để sản phẩm được phẳng phiu và không bị nhăn rách nhé.",
+          "hiểu được công dụng của các đồ dùng điện trong gia đình. Em hãy chú ý áp dụng thói quen tắt đèn, quạt khi ra khỏi phòng như bài đã học.",
+          "chuẩn bị vật liệu đầy đủ cho tiết học. Em nên rèn thêm tính kiên nhẫn khi cắt các chi tiết nhỏ để đường cắt được thẳng và mịn màng hơn.",
+          "hoàn thành sản phẩm trong thời gian quy định. Em hãy chú ý trang trí thêm các chi tiết phụ để sản phẩm của mình thêm phần sinh động.",
+          "biết cách sử dụng thước kẻ và kéo an toàn. Em cần chú ý vuốt phẳng các nếp gấp giấy để mô hình lắp ráp đứng vững hơn.",
+          "nắm được các kiến thức cơ bản về cây trồng và vật nuôi trong bài học. Em hãy chú ý quan sát thêm thực tế xung quanh nhà mình nhé.",
+          "có ý thức hợp tác cùng bạn trong nhóm thực hành. Em nên mạnh dạn đóng góp ý tưởng của mình khi trang trí sản phẩm chung.",
+          "hoàn thành bài học đạt yêu cầu. Em hãy nhớ luôn dọn sạch giấy vụn và cất gọn dụng cụ học tập vào hộp sau khi kết thúc giờ học nhé."
+        ],
+        "Chưa hoàn thành": [
+          "thao tác lắp ráp, cắt dán còn chậm và chưa hoàn thiện sản phẩm đúng thời gian. Em cần tập trung hơn trong giờ thực hành và nhờ bạn bè hỗ trợ thêm.",
+          "còn lúng túng khi sử dụng kéo và thước đo, đường cắt còn bị lệch. Em hãy làm chậm rãi và nhờ cô hướng dẫn cách cầm kéo an toàn nhé.",
+          "chưa chuẩn bị đủ vật liệu học tập khi đến lớp. Em hãy nhờ bố mẹ nhắc nhở chuẩn bị đồ dùng theo thời khóa biểu từ tối hôm trước.",
+          "dễ nản lòng khi gặp các chi tiết khó gấp hoặc khó dán. Em hãy kiên trì thử lại từng bước một, cô luôn sẵn sàng giúp đỡ em!",
+          "chưa nắm rõ quy tắc an toàn khi sử dụng đồ dùng sắc nhọn và thiết bị điện. Em cần chú ý lắng nghe cô hướng dẫn kỹ trước khi làm bài.",
+          "sản phẩm còn dán lem nhem hồ và chưa đúng kích thước yêu cầu. Em hãy chú ý quan sát mẫu của cô thật kỹ trước khi bắt tay vào làm.",
+          "còn hay để quên giấy vụn dưới gầm bàn sau giờ học. Em cần rèn luyện thói quen giữ gìn vệ sinh chung và dọn dẹp sạch sẽ góc học tập.",
+          "chưa chủ động tham gia cùng các bạn trong nhóm, còn ngồi nhìn bạn làm. Em hãy mạnh dạn nhận một phần việc nhỏ để cùng bạn hoàn thành nhé.",
+          "tốc độ thực hành còn chậm, cần nhiều sự hỗ trợ của cô giáo. Thầy cô sẽ tiếp tục kiên nhẫn hướng dẫn để em khéo léo hơn.",
+          "cần rèn thêm sự cẩn thận và tính kiên nhẫn trong môn học này. Cô tin qua từng bài thực hành em sẽ ngày càng tiến bộ hơn!"
+        ]
+      },
+      "Đạo đức": {
+        "Hoàn thành tốt": [
+          "luôn lễ phép với thầy cô, hòa đồng, thân thiện với bạn bè và có ý thức kỷ luật lớp học rất tốt. Em là tấm gương sáng về tinh thần trách nhiệm và lòng nhân ái!",
+          "nhận thức đúng đắn về các hành vi đạo đức, biết lắng nghe, chia sẻ và luôn sẵn sàng giúp đỡ các bạn xung quanh. Cô rất trân trọng những nghĩa cử đẹp của em.",
+          "có thái độ ứng xử rất chuẩn mực, luôn nói lời cảm ơn, xin lỗi chân thành và tích cực tham gia các phong trào vì cộng đồng của trường lớp.",
+          "biết phân biệt rõ ràng hành vi đúng sai, dám dũng cảm nhận lỗi và bảo vệ lẽ phải. Em luôn được bạn bè trong lớp yêu quý, kính trọng.",
+          "có tinh thần tự giác rất cao trong học tập và sinh hoạt, luôn quan tâm, nhường nhịn các em nhỏ và kính trọng người lớn tuổi.",
+          "xử lý các tình huống đạo đức trong bài học rất thông minh, nhân hậu và thấu hiểu. Rất đáng biểu dương và khen ngợi!",
+          "luôn giữ lời hứa, trung thực trong kiểm tra và luôn có ý thức bảo vệ của công trường lớp sạch đẹp, gọn gàng.",
+          "chủ động hòa giải xích mích giữa các bạn trong lớp, lời nói nhẹ nhàng, lịch sự và luôn mang đến sự vui vẻ, hòa thuận cho tập thể.",
+          "hiểu sâu sắc ý nghĩa của sự biết ơn và lòng hiếu thảo, luôn thể hiện tình cảm yêu thương gia đình bằng những việc làm thiết thực hàng ngày.",
+          "hoàn thành xuất sắc mục tiêu bài học Đạo đức, luôn là học sinh gương mẫu về nền nếp và phẩm chất tốt đẹp cho cả lớp noi theo."
+        ],
+        "Hoàn thành": [
+          "ngoan ngoãn, chấp hành tốt các quy định của lớp và của trường. Em cần rèn thêm tính kiên trì và tự giác trong việc tự kiểm điểm hành vi hàng ngày.",
+          "có thái độ ứng xử đúng mực với thầy cô và bạn bè. Em hãy tích cực phát biểu bày tỏ quan điểm của mình trong các bài học xử lý tình huống đạo đức.",
+          "biết chào hỏi lễ phép khi gặp người lớn. Em hãy chú ý giữ trật tự và tập trung hơn trong giờ học để không làm ảnh hưởng đến các bạn xung quanh.",
+          "nhận biết được các hành vi nên làm và không nên làm theo bài học. Em hãy tự tin áp dụng những điều tốt đẹp đó vào sinh hoạt hàng ngày nhé.",
+          "thật thà, hòa đồng với bạn bè cùng bàn. Em cần rèn thêm sự chủ động giúp đỡ bạn bè khi thấy bạn gặp khó khăn trong học tập.",
+          "hoàn thành các bài tập trong vở bài tập Đạo đức. Em hãy mạnh dạn chia sẻ những câu chuyện thực tế về lòng tốt của bản thân trước lớp.",
+          "có ý thức giữ gìn vệ sinh lớp học và bàn ghế. Em hãy chú ý nhắc nhở các bạn cùng thực hiện để lớp mình luôn sạch đẹp nhé.",
+          "biết lắng nghe lời khuyên của thầy cô và cha mẹ. Em hãy cố gắng khắc phục những thiếu sót nhỏ để bản thân ngày càng hoàn thiện hơn.",
+          "tham gia đầy đủ các hoạt động đạo đức và kỹ năng sống. Em nên tự tin hơn khi đóng vai giải quyết tình huống cùng các bạn trong nhóm.",
+          "có tinh thần đoàn kết với các bạn trong lớp. Em hãy tiếp tục duy trì thái độ chan hòa và nói năng lịch sự với mọi người xung quanh."
+        ],
+        "Chưa hoàn thành": [
+          "đôi lúc còn thiếu tập trung và cần sự nhắc nhở của giáo viên về nề nếp kỷ luật. Em hãy chú ý rèn luyện thói quen tự giác và lắng nghe mọi người xung quanh hơn nhé!",
+          "còn hay nói chuyện riêng và làm việc riêng trong giờ học. Em hãy chú ý giữ trật tự để lắng nghe bài giảng và tôn trọng thầy cô, bạn bè nhé.",
+          "đôi khi còn tranh giành đồ dùng với bạn và chưa biết nhường nhịn. Em hãy học cách chia sẻ và nói lời xin lỗi chân thành khi làm bạn buồn.",
+          "còn rụt rè khi nhận lỗi và hay đổ lỗi cho hoàn cảnh. Em hãy dũng cảm nhận khuyết điểm, cô và các bạn sẽ luôn yêu thương và giúp đỡ em sửa đổi.",
+          "chưa chú ý giữ gìn vệ sinh chung, đôi lúc còn vứt rác chưa đúng nơi quy định. Em hãy chú ý bỏ rác vào thùng rác để giữ trường lớp sạch đẹp nhé.",
+          "còn chưa thực sự tự giác trong việc chuẩn bị sách vở và đồ dùng. Em hãy rèn thói quen tự soạn sách vở theo thời khóa biểu mỗi ngày.",
+          "còn ngại ngùng khi chào hỏi thầy cô và người lớn tuổi. Em hãy tự tin cất lời chào lễ phép mỗi khi gặp người lớn nhé!",
+          "dễ nổi nóng khi có điều không vừa ý với bạn cùng lớp. Em hãy tập bình tĩnh, hít thở sâu và tâm sự cùng cô giáo để cùng giải quyết khúc mắc.",
+          "chưa tích cực tham gia các hoạt động tập thể của lớp. Em hãy mở lòng hòa đồng cùng các bạn để mỗi ngày đến trường là một ngày vui.",
+          "cần rèn luyện thêm tính kiên nhẫn và sự khiêm tốn. Giáo viên và gia đình sẽ luôn theo sát, nhắc nhở để em rèn luyện nhân cách tốt hơn."
+        ]
+      },
+      "Hoạt động trải nghiệm": {
+        "Hoàn thành tốt": [
+          "rất năng nổ, nhiệt tình tham gia các hoạt động phong trào và có kỹ năng làm việc nhóm xuất sắc. Em luôn mang lại năng lượng tích cực cho cả lớp!",
+          "chủ động đề xuất ý tưởng trong các buổi sinh hoạt lớp, biết quan tâm giúp đỡ mọi người và có khả năng tự quản rất tốt. Rất đáng khen ngợi!",
+          "tự tin dẫn dắt các trò chơi tập thể, diễn đạt lưu loát và luôn biết cách gắn kết các thành viên trong nhóm lại với nhau.",
+          "có ý thức bảo vệ môi trường rất cao, luôn đi đầu trong các hoạt động chăm sóc bồn hoa, dọn dẹp lớp học và thu gom rác thải.",
+          "biết lập kế hoạch cá nhân khoa học, tự giác quản lý thời gian biểu và thực hiện nghiêm túc các cam kết rèn luyện bản thân.",
+          "luôn thể hiện sự sáng tạo và khéo léo trong các sản phẩm trải nghiệm, tự tin chia sẻ cảm xúc chân thành trước toàn trường.",
+          "tích cực tham gia các hoạt động đền ơn đáp nghĩa và chia sẻ yêu thương; có kỹ năng thích ứng và xử lý tình huống thực tế rất nhanh nhẹn.",
+          "lan tỏa tinh thần lạc quan, vui vẻ đến mọi người xung quanh; là người bạn đáng tin cậy và luôn hoàn thành xuất sắc mọi nhiệm vụ được giao.",
+          "thể hiện bản lĩnh tự tin khi tham gia các hoạt động trên sân khấu, có năng khiếu văn nghệ và kỹ năng tương tác với đám đông nổi bật.",
+          "hoàn thành xuất sắc mục tiêu Hoạt động trải nghiệm, luôn là hạt nhân nòng cốt xây dựng tập thể lớp đoàn kết và vững mạnh."
+        ],
+        "Hoàn thành": [
+          "tham gia đầy đủ các hoạt động trải nghiệm theo phân công của nhóm. Em nên mạnh dạn, tự tin hơn khi đứng lên chia sẻ cảm nghĩ trước tập thể lớp.",
+          "hoàn thành nhiệm vụ trải nghiệm. Em hãy phát huy hơn nữa tinh thần chủ động phối hợp cùng các bạn để buổi sinh hoạt thêm sôi nổi.",
+          "hòa đồng, vui vẻ cùng các bạn trong các trò chơi tập thể. Em hãy chủ động giơ tay đóng góp ý kiến khi nhóm thảo luận kế hoạch nhé.",
+          "có ý thức giữ gìn vệ sinh chung sau mỗi buổi hoạt động trải nghiệm. Em cần rèn thêm sự nhanh nhẹn khi tham gia các hoạt động ngoài trời.",
+          "thực hiện được các việc làm tự chăm sóc bản thân theo hướng dẫn. Em hãy duy trì các thói quen tốt này đều đặn tại gia đình nhé.",
+          "tham gia đầy đủ các buổi sinh hoạt Sao, sinh hoạt Đội. Em nên tự tin hơn khi thể hiện năng khiếu của mình trước các bạn cùng lớp.",
+          "hoàn thành các sản phẩm trải nghiệm theo yêu cầu. Em hãy dành thêm thời gian chăm chút để sản phẩm của mình mang dấu ấn cá nhân rõ nét hơn.",
+          "biết lắng nghe sự phân công của nhóm trưởng. Em hãy chủ động nhận những phần việc phù hợp với sở trường của mình để phát huy nhé.",
+          "có ý thức chấp hành tốt nội quy trong các chuyến tham quan trải nghiệm. Em hãy chú ý quan sát và ghi chép lại nhiều điều thú vị hơn.",
+          "tiếp thu tốt các bài học kỹ năng sống. Em hãy tích cực vận dụng những kỹ năng đã học vào các tình huống sinh hoạt hàng ngày."
+        ],
+        "Chưa hoàn thành": [
+          "còn rụt rè, chưa chủ động hòa nhập vào các hoạt động tập thể của lớp. Em hãy tự tin mở lòng tham gia cùng các bạn, cô và cả lớp luôn chào đón em!",
+          "còn đứng ngoài quan sát và chưa dám tham gia vào các trò chơi vận động cùng nhóm. Em hãy mạnh dạn nắm tay các bạn cùng chơi nhé!",
+          "chưa hoàn thành các cam kết rèn luyện cá nhân đã đề ra. Em cần sự nhắc nhở của bố mẹ và cô giáo để kiên trì thực hiện từng mục tiêu nhỏ.",
+          "dễ chán nản và bỏ dở giữa chừng khi gặp các nhiệm vụ trải nghiệm cần sự kiên nhẫn. Em hãy cố gắng làm đến cùng cùng các bạn nhé!",
+          "còn thụ động, chỉ làm việc khi có sự chỉ định trực tiếp từ giáo viên. Em hãy chủ động xung phong nhận nhiệm vụ để rèn luyện bản lĩnh nhé.",
+          "chưa chú ý lắng nghe phổ biến nội quy trước khi tham gia hoạt động ngoài trời. Em cần tập trung chú ý để đảm bảo an toàn cho bản thân.",
+          "còn ngại chia sẻ suy nghĩ và cảm xúc của mình với bạn bè xung quanh. Em hãy tập tâm sự những điều nhỏ bé với bạn cùng bàn mỗi ngày nhé.",
+          "đôi lúc còn để quên đồ dùng hoặc sản phẩm trải nghiệm ở nhà. Em hãy tự tay chuẩn bị đồ dùng vào cặp từ tối hôm trước.",
+          "cần rèn luyện thêm kỹ năng làm việc nhóm và tinh thần đồng đội. Cô và các bạn sẽ luôn bên cạnh cổ vũ để em ngày càng tự tin hơn.",
+          "tốc độ hòa nhập vào tập thể còn chậm. Thầy cô và phụ huynh sẽ tiếp tục động viên để em cảm nhận được niềm vui trong từng hoạt động."
+        ]
+      },
+      "Năng lực cốt lõi": {
+        "Hoàn thành tốt": [
+          "có năng lực tự chủ và tự học rất tốt, biết lập kế hoạch và tự giác hoàn thành mọi nhiệm vụ học tập. Kỹ năng giao tiếp và hợp tác nhóm rất nổi bật!",
+          "có tư duy giải quyết vấn đề sáng tạo, biết lắng nghe và điều phối công việc nhóm hiệu quả. Em thể hiện tinh thần trách nhiệm rất cao trước tập thể.",
+          "luôn chủ động tìm tòi kiến thức mới, biết tự đánh giá kết quả học tập của bản thân và đưa ra giải pháp khắc phục khó khăn rất thông minh.",
+          "giao tiếp tự tin, diễn đạt ý kiến khúc chiết, mạch lạc và luôn biết tôn trọng, lắng nghe quan điểm của người khác khi tranh luận.",
+          "có khả năng hợp tác nhóm xuất sắc, biết phân chia công việc hợp lý và luôn hỗ trợ đồng đội để cả nhóm cùng đạt kết quả cao nhất.",
+          "có tư duy phản biện sắc sảo, luôn đặt ra những câu hỏi hay và tìm ra cách giải quyết vấn đề nhanh chóng, độc đáo.",
+          "quản lý thời gian học tập và sinh hoạt rất khoa học, luôn hoàn thành bài tập đúng hạn với chất lượng tốt nhất mà không cần ai nhắc nhở.",
+          "tự tin thuyết trình trước đám đông, ngôn ngữ cơ thể tự nhiên và biết cách thu hút sự chú ý của người nghe. Rất đáng biểu dương!",
+          "khả năng thích ứng nhanh với môi trường học tập mới, biết ứng dụng công nghệ thông tin vào việc tự học rất hiệu quả.",
+          "thể hiện rõ nét tố chất của một người dẫn dắt tập thể, năng động, sáng tạo và luôn tràn đầy tinh thần trách nhiệm trong mọi công việc."
+        ],
+        "Hoàn thành": [
+          "có khả năng tự hoàn thành bài tập theo sự hướng dẫn của giáo viên. Em cần rèn thêm kỹ năng hợp tác, chia sẻ và lắng nghe ý kiến của các bạn trong nhóm.",
+          "biết cách trao đổi thông tin trong học tập. Em hãy tự tin hơn khi trình bày suy nghĩ của bản thân trước đám đông để nâng cao năng lực giao tiếp.",
+          "tự giác chuẩn bị sách vở và đồ dùng học tập trước khi đến lớp. Em nên rèn thêm thói quen tự kiểm tra lại bài làm trước khi nộp.",
+          "biết lắng nghe ý kiến của bạn trong nhóm. Em hãy mạnh dạn đóng góp thêm nhiều ý tưởng riêng của mình để buổi thảo luận thêm phong phú.",
+          "hoàn thành các nhiệm vụ được giao trong hoạt động nhóm. Em cần chủ động hơn trong việc hỗ trợ các bạn khác khi mình đã làm xong phần việc.",
+          "biết tìm kiếm sự giúp đỡ từ thầy cô khi gặp khó khăn. Em hãy tập thói quen suy nghĩ độc lập thêm một chút trước khi hỏi nhé.",
+          "giao tiếp lễ phép, hòa nhã với mọi người. Em nên rèn thêm kỹ năng diễn đạt sao cho ngắn gọn, gãy gọn và đúng trọng tâm vấn đề.",
+          "có ý thức tự học cơ bản ở nhà. Em hãy lập thời gian biểu chi tiết hơn để cân bằng hợp lý giữa thời gian học tập và vui chơi giải trí.",
+          "biết phối hợp cùng bạn trong các trò chơi học tập. Em hãy tự tin hơn trong việc đưa ra quyết định khi được nhóm giao trọng trách.",
+          "tiếp thu kiến thức ổn định. Em cần rèn luyện thêm sự tập trung để giải quyết các bài tập có nhiều bước thực hiện một cách độc lập."
+        ],
+        "Chưa hoàn thành": [
+          "còn phụ thuộc nhiều vào sự nhắc nhở của thầy cô, kỹ năng tự học và quản lý thời gian còn hạn chế. Em cần rèn thói quen tự giác chuẩn bị bài vở mỗi ngày.",
+          "còn rụt rè khi giao tiếp, nói quá nhỏ và ngại nhìn vào người đối diện. Em hãy tự tin ngẩng cao đầu và tập nói to từng câu ngắn mỗi ngày nhé!",
+          "chưa biết cách phối hợp làm việc cùng các bạn trong nhóm, hay làm việc một mình. Em hãy mở lòng tham gia chia sẻ cùng các bạn trong tổ nhé.",
+          "dễ nản lòng và bỏ cuộc ngay khi gặp một bài tập khó hoặc tình huống mới. Em hãy kiên trì thử lại và mạnh dạn hỏi cô để được tháo gỡ khó khăn.",
+          "còn thụ động, chưa biết tự tìm cách giải quyết vấn đề đơn giản trong lớp học. Cô sẽ luôn đồng hành để hướng dẫn em từng bước nhỏ.",
+          "chưa có thói quen tự giác ngồi vào bàn học ở nhà, cần cha mẹ kèm cặp nhiều. Em hãy đặt đồng hồ báo thức và tự giác học bài đúng giờ nhé.",
+          "dễ bị phân tâm bởi các yếu tố xung quanh trong giờ học nhóm. Em cần chú ý tập trung vào nhiệm vụ chung của cả tổ để không bị chậm trễ.",
+          "còn ngập ngừng khi trả lời câu hỏi và chưa diễn đạt được ý mình muốn nói. Em hãy bình tĩnh suy nghĩ và diễn đạt từng ý một nhé.",
+          "kỹ năng tự quản lý đồ dùng học tập cá nhân còn yếu, hay để quên sách vở. Em hãy nhờ bố mẹ rèn thói quen kiểm tra cặp sách mỗi tối.",
+          "cần rèn luyện thêm tính kiên trì, độc lập và tự tin trong học tập. Thầy cô và gia đình sẽ kiên nhẫn đồng hành để em từng bước trưởng thành."
+        ]
+      },
+      "Phẩm chất": {
+        "Hoàn thành tốt": [
+          "chăm chỉ, trung thực trong học tập và có tinh thần trách nhiệm rất cao. Em luôn yêu thương, giúp đỡ bạn bè và có ý thức giữ gìn của công sạch đẹp.",
+          "luôn khiêm tốn, biết nói lời cảm ơn, xin lỗi và có lòng nhân ái sâu sắc. Em là tấm gương sáng về phẩm chất tốt đẹp cho các bạn trong lớp noi theo.",
+          "rất trung thực, không bao giờ nhìn bài của bạn và luôn dũng cảm nhận lỗi khi mình có thiếu sót. Thầy cô và bạn bè rất tin tưởng em!",
+          "có lòng nhân ái, luôn quan tâm chăm sóc các bạn có hoàn cảnh khó khăn và tích cực tham gia các phong trào từ thiện, sẻ chia.",
+          "thể hiện tinh thần trách nhiệm rất cao với công việc của lớp, luôn hoàn thành xuất sắc nhiệm vụ trực nhật và bảo vệ tài sản chung.",
+          "chăm chỉ học tập, chuyên cần đến lớp đúng giờ, vở sạch chữ đẹp và luôn nỗ lực hết mình để vượt qua mọi bài tập thử thách.",
+          "có lòng tự trọng cao, luôn tôn trọng sự thật và biết giữ lời hứa với thầy cô, bạn bè. Đó là phẩm chất vô cùng đáng quý!",
+          "yêu quý thiên nhiên, có ý thức bảo vệ cây xanh trường lớp và luôn nhắc nhở mọi người giữ gìn môi trường sống xanh sạch đẹp.",
+          "kính trọng thầy cô giáo, hiếu thảo với ông bà cha mẹ và chan hòa, bao dung với tất cả bạn bè xung quanh. Thật đáng khen ngợi!",
+          "hội tụ đầy đủ các phẩm chất cao đẹp của người học sinh: Yêu nước, Nhân ái, Chăm chỉ, Trung thực và Trách nhiệm. Cô rất tự hào về em!"
+        ],
+        "Hoàn thành": [
+          "có ý thức chấp hành tốt nội quy trường lớp, thật thà trong kiểm tra. Em cần rèn luyện thêm tính kiên trì, không nản lòng khi gặp những bài tập khó.",
+          "chăm ngoan, biết vâng lời người lớn. Em hãy chủ động hơn trong việc giúp đỡ bạn bè và tham gia tích cực vào các công việc vệ sinh chung của lớp.",
+          "đi học chuyên cần, đúng giờ. Em cần rèn thêm tính cẩn thận trong việc bảo quản sách vở, đồ dùng học tập để đồ dùng luôn bền đẹp.",
+          "thật thà trong học tập và sinh hoạt. Em hãy mạnh dạn hơn trong việc bày tỏ chính kiến và đấu tranh bảo vệ điều đúng trước tập thể.",
+          "biết yêu thương, chia sẻ đồ dùng với bạn cùng bàn. Em hãy tích cực tham gia thêm các hoạt động đền ơn đáp nghĩa của trường nhé.",
+          "có ý thức làm bài tập về nhà đầy đủ. Em cần chú ý rèn thêm tính kiên nhẫn khi đọc sách để bồi dưỡng thêm kiến thức cho bản thân.",
+          "ngoan ngoãn, lễ phép khi chào hỏi. Em hãy chú ý giữ gìn vệ sinh chung nơi công cộng và bỏ rác đúng nơi quy định mọi lúc mọi nơi.",
+          "hoàn thành nhiệm vụ trực nhật được phân công. Em nên chủ động hỗ trợ thêm các bạn khác trong tổ để lớp học được sạch đẹp nhanh hơn.",
+          "có thái độ học tập nghiêm túc. Em hãy rèn thêm tính tự giác, hạn chế để cha mẹ và thầy cô phải nhắc nhở nhiều lần về việc học.",
+          "biết lắng nghe lời khuyên bảo của mọi người. Em hãy cố gắng duy trì các thói quen tốt để ngày càng hoàn thiện bản thân hơn nữa."
+        ],
+        "Chưa hoàn thành": [
+          "đôi lúc còn quên đồ dùng học tập và chưa thực sự tự giác làm bài tập về nhà. Em hãy chú ý rèn tính cẩn thận, sắp xếp thời khóa biểu khoa học hơn nhé!",
+          "chưa thật thà nhận lỗi khi mắc khuyết điểm, đôi lúc còn tìm lý do bao biện. Em hãy dũng cảm nhận lỗi để được thầy cô và bạn bè yêu quý hơn nhé.",
+          "còn lười làm bài tập về nhà và chưa chăm chỉ đọc sách. Em hãy đặt mục tiêu hoàn thành bài tập trước khi xem ti vi hoặc chơi điện thoại nhé.",
+          "chưa có ý thức tự giác giữ gìn vệ sinh chung, thỉnh thoảng còn xả rác bừa bãi. Em cần chú ý rèn nếp sống văn minh và sạch sẽ.",
+          "đôi khi còn thiếu trách nhiệm với nhiệm vụ trực nhật lớp, hay bỏ về sớm. Em cần hoàn thành xong phần việc của mình trước khi ra về nhé.",
+          "còn hay quên lời hứa với thầy cô và bố mẹ. Em hãy tập thói quen ghi nhớ và quyết tâm thực hiện đúng những gì mình đã nói.",
+          "chưa biết chia sẻ, còn ích kỷ trong việc sử dụng đồ chơi và đồ dùng học tập chung. Em hãy học cách san sẻ niềm vui cùng bạn bè nhé.",
+          "dễ nản lòng, hay bỏ dở việc học giữa chừng khi gặp bài toán khó. Em hãy kiên nhẫn suy nghĩ và rèn luyện đức tính bền bỉ, kiên trì.",
+          "còn thiếu tập trung và chưa có ý thức tự giác cao trong giờ tự học. Em cần rèn luyện tính kỷ luật tự giác để tiến bộ mỗi ngày.",
+          "cần rèn luyện thêm sự trung thực, chăm chỉ và tinh thần trách nhiệm. Thầy cô và gia đình sẽ luôn kiên nhẫn đồng hành để uốn nắn em từng ngày."
+        ]
+      }
+    };
+
+    function generateDistinctFeedbacks(studentList, subject, grade, tone) {
+      const subjectPool = SUBJECT_FEEDBACK_BANK[subject] || SUBJECT_FEEDBACK_BANK["Toán"];
+      
+      const usedIndices = {
+        "Hoàn thành tốt": 0,
+        "Hoàn thành": 0,
+        "Chưa hoàn thành": 0
+      };
+
+      return studentList.map((st) => {
+        const pool = subjectPool[st.level] || subjectPool["Hoàn thành tốt"];
+        const currentIndex = usedIndices[st.level] % pool.length;
+        usedIndices[st.level] = usedIndices[st.level] + 1;
+
+        let content = pool[currentIndex];
+        let fullFeedback = "";
+
+        if (tone === "Ấm áp") {
+          fullFeedback = `Em ${st.code} ${content}`;
+        } else if (tone === "Ngắn gọn") {
+          const shortContent = content.split('.')[0] + '.';
+          fullFeedback = `Em ${st.code}: ${st.level}. ${shortContent}`;
+        } else {
+          fullFeedback = `Học sinh ${st.code} (${subject}): Đạt mức ${st.level}. ${content}`;
+        }
+
+        return {
+          code: st.code,
+          level: st.level,
+          feedback: fullFeedback,
+          poolIndex: currentIndex
+        };
+      });
+    }
+
+    /* Đổi sang một lời nhận xét khác cho 1 học sinh cụ thể */
+    function cycleStudentFeedback(cardIndex, code, level) {
+      const subject = document.getElementById('fb-subject').value;
+      const tone = document.getElementById('fb-tone').value;
+      const subjectPool = SUBJECT_FEEDBACK_BANK[subject] || SUBJECT_FEEDBACK_BANK["Toán"];
+      const pool = subjectPool[level] || subjectPool["Hoàn thành tốt"];
+
+      const textarea = document.getElementById(`fb-text-${cardIndex}`);
+      if (!textarea) return;
+
+      const randomIdx = Math.floor(Math.random() * pool.length);
+      const content = pool[randomIdx];
+
+      let newFeedback = "";
+      if (tone === "Ấm áp") {
+        newFeedback = `Em ${code} ${content}`;
+      } else if (tone === "Ngắn gọn") {
+        const shortContent = content.split('.')[0] + '.';
+        newFeedback = `Em ${code}: ${level}. ${shortContent}`;
+      } else {
+        newFeedback = `Học sinh ${code} (${subject}): Đạt mức ${level}. ${content}`;
+      }
+
+      textarea.value = newFeedback;
+      showToast(`Đã đổi lời nhận xét mới cho em ${code}!`);
+    }
+
+    function renderFeedbacksDirectly() {
+      const grade = document.getElementById('fb-grade').value;
+      const subject = document.getElementById('fb-subject').value;
+      const tone = document.getElementById('fb-tone').value;
+
+      const rows = document.querySelectorAll('#student-list-body tr');
+      let valid = true;
+      let studentList = [];
+
+      rows.forEach(row => {
+        const codeInput = row.querySelector('.student-code-input');
+        const levelSelect = row.querySelector('.student-level-select');
+
+        if (codeInput && levelSelect) {
+          const code = codeInput.value.trim();
+          const level = levelSelect.value;
+
+          if (!validateStudentCode(codeInput)) {
+            valid = false;
+          }
+
+          if (code) {
+            studentList.push({ code, level });
+          }
+        }
+      });
+
+      if (!valid) {
+        showToast('Có mã học sinh chưa đúng quy định (quá 8 ký tự hoặc có dấu cách)!');
+        return;
+      }
+
+      if (studentList.length === 0) {
+        showToast('Cô vui lòng nhập ít nhất một học sinh nhé!');
+        return;
+      }
+
+      const container = document.getElementById('feedback-list-container');
+      const resultBox = document.getElementById('result-box-2');
+      if (!container || !resultBox) return;
+
+      container.innerHTML = '';
+      const generatedList = generateDistinctFeedbacks(studentList, subject, grade, tone);
+
+      generatedList.forEach((st, idx) => {
+        let badgeClass = 'level-good';
+        if (st.level === 'Hoàn thành') badgeClass = 'level-pass';
+        if (st.level === 'Chưa hoàn thành') badgeClass = 'level-support';
+
+        const card = document.createElement('div');
+        card.className = 'feedback-card';
+        card.innerHTML = `
+          <div class="feedback-card-header">
+            <div>
+              <span class="student-badge">${st.code}</span>
+              <span class="level-badge ${badgeClass}" style="margin-left: 6px;">${st.level}</span>
+            </div>
+            <span style="font-size: 0.88rem; color: #64748b; font-weight: 600;">📖 ${subject} (Lớp ${grade}) &bull; Giọng: ${tone}</span>
+          </div>
+          <textarea class="feedback-text-area" id="fb-text-${idx}">${st.feedback}</textarea>
+          <div class="feedback-card-actions">
+            <button type="button" class="btn btn-secondary" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" onclick="cycleStudentFeedback(${idx}, '${st.code}', '${st.level}')">🔄 Đổi mẫu khác</button>
+            <button type="button" class="btn btn-green" style="min-height: 36px; padding: 6px 14px; font-size: 0.9rem;" onclick="copySingleFeedback('fb-text-${idx}')">📋 Sao chép</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      showToast(`Đã tạo xong ${studentList.length} lời nhận xét môn ${subject}!`);
+    }
+
+    function copySingleFeedback(textareaId) {
+      const el = document.getElementById(textareaId);
+      if (!el) return;
+      fallbackCopyText(el.value, 'Đã sao chép lời nhận xét của học sinh!');
+    }
+
+    function copyAllFeedbacks() {
+      const textareas = document.querySelectorAll('.feedback-text-area');
+      if (textareas.length === 0) return;
+
+      let allText = [];
+      textareas.forEach(t => {
+        allText.push(t.value.trim());
+      });
+
+      fallbackCopyText(allText.join('\n\n'), 'Đã sao chép toàn bộ nhận xét vào bộ nhớ tạm!');
+    }
+
+    /* Tải danh sách lời nhận xét ra file Excel (.xls) có đầy đủ các cột */
+    function downloadFeedbacksExcel() {
+      const grade = document.getElementById('fb-grade').value;
+      const subject = document.getElementById('fb-subject').value;
+      const cards = document.querySelectorAll('#feedback-list-container .feedback-card');
+
+      if (cards.length === 0) {
+        showToast('Chưa có danh sách nhận xét để tải xuống!');
+        return;
+      }
+
+      let tableRows = '';
+      cards.forEach((card, index) => {
+        const studentCode = card.querySelector('.student-badge')?.innerText.trim() || `HS${index + 1}`;
+        const studentLevel = card.querySelector('.level-badge')?.innerText.trim() || '';
+        const textarea = card.querySelector('.feedback-text-area');
+        // Lấy nội dung thực tế (kể cả sau khi cô sửa tay hoặc bấm đổi mẫu)
+        const feedbackText = textarea ? textarea.value.trim() : '';
+
+        // Xử lý ký tự đặc biệt trong HTML
+        const safeFeedback = feedbackText
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+
+        tableRows += `
+          <tr>
+            <td style="text-align: center; border: 1px solid #cbd5e1; padding: 8px;">${index + 1}</td>
+            <td style="text-align: center; border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; color: #1e6091;">${studentCode}</td>
+            <td style="text-align: center; border: 1px solid #cbd5e1; padding: 8px;">${studentLevel}</td>
+            <td style="text-align: left; border: 1px solid #cbd5e1; padding: 8px; mso-number-format:'\\@';">${safeFeedback}</td>
+          </tr>
+        `;
+      });
+
+      const excelHtml = `
+        <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+        <head>
+          <meta charset="utf-8">
+          <!--[if gte mso 9]>
+          <xml>
+            <x:ExcelWorkbook>
+              <x:ExcelWorksheets>
+                <x:ExcelWorksheet>
+                  <x:Name>NhanXet_${subject.substring(0, 15)}</x:Name>
+                  <x:WorksheetOptions>
+                    <x:DisplayGridlines/>
+                  </x:WorksheetOptions>
+                </x:ExcelWorksheet>
+              </x:ExcelWorksheets>
+            </x:ExcelWorkbook>
+          </xml>
+          <![endif]-->
+          <style>
+            body { font-family: 'Times New Roman', Arial, sans-serif; }
+            th { background-color: #1e6091; color: #ffffff; font-weight: bold; border: 1px solid #0f3d5e; padding: 10px; font-size: 11pt; }
+            td { font-size: 11pt; }
+          </style>
+        </head>
+        <body>
+          <h2 style="text-align: center; color: #1e6091; margin-bottom: 4px;">BẢNG TỔNG HỢP NHẬN XÉT HỌC SINH THEO THÔNG TƯ 27/2020/TT-BGDĐT</h2>
+          <p style="text-align: center; font-size: 11pt; margin-top: 0; margin-bottom: 14px;">
+            <b>Môn học / Mảng nhận xét:</b> ${subject} &nbsp;|&nbsp; <b>Khối lớp:</b> Lớp ${grade} &nbsp;|&nbsp; <b>Bộ sách:</b> Kết nối tri thức với cuộc sống
+          </p>
+          <table border="1" style="border-collapse: collapse; width: 100%;">
+            <thead>
+              <tr>
+                <th style="width: 50px;">STT</th>
+                <th style="width: 120px;">Học sinh (Mã số)</th>
+                <th style="width: 160px;">Mức đạt được</th>
+                <th>Lời nhận xét của học sinh</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${tableRows}
+            </tbody>
+          </table>
+        </body>
+        </html>
+      `;
+
+      // Tạo Blob định dạng Excel với BOM UTF-8 tránh lỗi font chữ tiếng Việt
+      const blob = new Blob(['\ufeff', excelHtml], { type: 'application/vnd.ms-excel;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const cleanSubject = subject.replace(/[^a-zA-Z0-9À-ỹ]/g, '_');
+      const fileName = `Nhan_xet_${cleanSubject}_Lop_${grade}.xls`;
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showToast('Đang tải file Excel nhận xét học sinh về máy tính!');
+    }
+
+    function fallbackCopyText(text, successMessage) {
+      const dummy = document.createElement("textarea");
+      dummy.style.position = 'fixed';
+      dummy.style.opacity = '0';
+      document.body.appendChild(dummy);
+      dummy.value = text;
+      dummy.select();
+      try {
+        document.execCommand("copy");
+        showToast(successMessage || 'Đã sao chép thành công!');
+      } catch (err) {
+        showToast('Vui lòng chọn văn bản và nhấn Ctrl+C để sao chép!');
+      }
+      document.body.removeChild(dummy);
+    }
+
+    /* Khởi tạo dữ liệu học sinh mẫu khi trang tải xong */
+    window.addEventListener('DOMContentLoaded', () => {
+      addStudentRow('HS01', 'Hoàn thành tốt');
+      addStudentRow('HS02', 'Hoàn thành tốt');
+      addStudentRow('HS03', 'Hoàn thành');
+      addStudentRow('HS04', 'Chưa hoàn thành');
+    });
+  </script>
+</body>
+</html>
